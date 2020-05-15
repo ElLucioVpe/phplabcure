@@ -2,38 +2,75 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+/**
+ * @property string $correoUser
+ * @property string $nickUser
+ * @property string $passwordUser
+ * @property string $tipoUser
+ * @property int $nivelUser
+ * @property string $avatarUser
+ * @property Meme[] $memes
+ * @property Puntuacion[] $puntuacions
+ * @property Suscripcion[] $suscripcions
+ */
+class User extends Model
 {
-    use Notifiable;
+    /**
+     * The table associated with the model.
+     * 
+     * @var string
+     */
+    protected $table = 'user';
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
+     * The primary key for the model.
+     * 
+     * @var string
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $primaryKey = 'correoUser';
 
     /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
+     * The "type" of the auto-incrementing ID.
+     * 
+     * @var string
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $keyType = 'string';
 
     /**
-     * The attributes that should be cast to native types.
-     *
+     * Indicates if the IDs are auto-incrementing.
+     * 
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    protected $fillable = ['nickUser', 'passwordUser', 'tipoUser', 'nivelUser', 'avatarUser'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function memes()
+    {
+        return $this->hasMany('App\Meme', 'User_correoUser', 'correoUser');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function puntuacions()
+    {
+        return $this->hasMany('App\Puntuacion', 'User_correoUser', 'correoUser');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function suscripcions()
+    {
+        return $this->hasMany('App\Suscripcion', 'User_correoUser', 'correoUser');
+    }
 }
