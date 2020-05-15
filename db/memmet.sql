@@ -8,19 +8,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema memmet
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema memmet
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `memmet` DEFAULT CHARACTER SET utf8 ;
+USE `memmet` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`User`
+-- Table `memmet`.`User`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`User` (
+CREATE TABLE IF NOT EXISTS `memmet`.`User` (
   `correoUser` VARCHAR(320) NOT NULL,
   `nickUser` VARCHAR(45) NOT NULL,
   `passwordUser` VARCHAR(50) NULL,
@@ -34,9 +34,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Meme`
+-- Table `memmet`.`Meme`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Meme` (
+CREATE TABLE IF NOT EXISTS `memmet`.`Meme` (
   `idMeme` INT NOT NULL,
   `fechaMeme` VARCHAR(45) NULL,
   `rutaMeme` VARCHAR(500) NULL,
@@ -45,16 +45,16 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Meme` (
   INDEX `fk_Meme_User_idx` (`User_correoUser` ASC),
   CONSTRAINT `fk_Meme_User`
     FOREIGN KEY (`User_correoUser`)
-    REFERENCES `mydb`.`User` (`correoUser`)
+    REFERENCES `memmet`.`User` (`correoUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Puntuacion`
+-- Table `memmet`.`Puntuacion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Puntuacion` (
+CREATE TABLE IF NOT EXISTS `memmet`.`Puntuacion` (
   `User_correoUser` VARCHAR(320) NOT NULL,
   `Meme_idMeme` INT NOT NULL,
   `valorPuntuacion` TINYINT NULL,
@@ -62,30 +62,30 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Puntuacion` (
   INDEX `fk_Puntuacion_Meme1_idx` (`Meme_idMeme` ASC),
   CONSTRAINT `fk_Puntuacion_User1`
     FOREIGN KEY (`User_correoUser`)
-    REFERENCES `mydb`.`User` (`correoUser`)
+    REFERENCES `memmet`.`User` (`correoUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Puntuacion_Meme1`
     FOREIGN KEY (`Meme_idMeme`)
-    REFERENCES `mydb`.`Meme` (`idMeme`)
+    REFERENCES `memmet`.`Meme` (`idMeme`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Tag`
+-- Table `memmet`.`Tag`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Tag` (
+CREATE TABLE IF NOT EXISTS `memmet`.`Tag` (
   `nombreTag` VARCHAR(320) NOT NULL,
   PRIMARY KEY (`nombreTag`))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Suscripcion`
+-- Table `memmet`.`Suscripcion`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Suscripcion` (
+CREATE TABLE IF NOT EXISTS `memmet`.`Suscripcion` (
   `User_correoUser` VARCHAR(320) NOT NULL,
   `Tag_nombreTag` VARCHAR(230) NOT NULL,
   `ignora` TINYINT NULL,
@@ -94,21 +94,21 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Suscripcion` (
   PRIMARY KEY (`User_correoUser`, `Tag_nombreTag`),
   CONSTRAINT `fk_Ignorados_User1`
     FOREIGN KEY (`User_correoUser`)
-    REFERENCES `mydb`.`User` (`correoUser`)
+    REFERENCES `memmet`.`User` (`correoUser`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Ignorados_Tag1`
     FOREIGN KEY (`Tag_nombreTag`)
-    REFERENCES `mydb`.`Tag` (`nombreTag`)
+    REFERENCES `memmet`.`Tag` (`nombreTag`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Tag_has_Meme`
+-- Table `memmet`.`Tag_has_Meme`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`Tag_has_Meme` (
+CREATE TABLE IF NOT EXISTS `memmet`.`Tag_has_Meme` (
   `Tag_nombreTag` VARCHAR(320) NOT NULL,
   `Meme_idMeme` INT NOT NULL,
   PRIMARY KEY (`Tag_nombreTag`, `Meme_idMeme`),
@@ -116,12 +116,12 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Tag_has_Meme` (
   INDEX `fk_Tag_has_Meme_Tag1_idx` (`Tag_nombreTag` ASC),
   CONSTRAINT `fk_Tag_has_Meme_Tag1`
     FOREIGN KEY (`Tag_nombreTag`)
-    REFERENCES `mydb`.`Tag` (`nombreTag`)
+    REFERENCES `memmet`.`Tag` (`nombreTag`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Tag_has_Meme_Meme1`
     FOREIGN KEY (`Meme_idMeme`)
-    REFERENCES `mydb`.`Meme` (`idMeme`)
+    REFERENCES `memmet`.`Meme` (`idMeme`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
