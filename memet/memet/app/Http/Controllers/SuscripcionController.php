@@ -24,7 +24,7 @@ class SuscripcionController extends Controller
      */
     public function create()
     {
-        //
+        //-------------------------------
     }
 
     /**
@@ -35,7 +35,19 @@ class SuscripcionController extends Controller
      */
     public function store(Request $request)
     {
+        $suscripcionAgregar = new Suscripcion;
         //
+        $request->validate(['User_correoUser'=>'required']);
+        $request->validate(['Tag_nombreTag'=>'required']);
+        //
+        $suscripcionAgregar->timestamps = false;
+        $suscripcionAgregar->User_correoUser = $request->User_correoUser;
+        $suscripcionAgregar->Tag_nombreTag = $request->Tag_nombreTag;
+        $suscripcionAgregar->ignora = $request->ignora;
+        //save
+        $suscripcionAgregar->save();
+
+        return back()->with('agregar', 'Se ha suscrito/ignorado el tag con exito');
     }
 
     /**
@@ -44,9 +56,12 @@ class SuscripcionController extends Controller
      * @param  \App\Suscripcion  $suscripcion
      * @return \Illuminate\Http\Response
      */
-    public function show(Suscripcion $suscripcion)
+    public function show($correoUser, $nombreTag)
     {
-        //
+        $suscripcionMostrar = App\Suscripcion ::where('User_correoUser', '=', $correoUser)
+        ->where('Tag_nombreTag', '=', $nombreTag)
+        ->first();
+        return view('mostrar', compact('suscripcionMostrar'));
     }
 
     /**
@@ -55,9 +70,13 @@ class SuscripcionController extends Controller
      * @param  \App\Suscripcion  $suscripcion
      * @return \Illuminate\Http\Response
      */
-    public function edit(Suscripcion $suscripcion)
+    public function edit($correoUser, $nombreTag)
     {
-        //
+        $suscripcionModificar = App\Suscripcion ::where('User_correoUser', '=', $correoUser)
+        ->where('Tag_nombreTag', '=', $nombreTag)
+        ->first();
+
+        return view('editar', compact('suscripcionModificar'));
     }
 
     /**
@@ -67,9 +86,15 @@ class SuscripcionController extends Controller
      * @param  \App\Suscripcion  $suscripcion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Suscripcion $suscripcion)
+    public function update(Request $request, $correoUser, $nombreTag)
     {
-        //
+        $suscripcionUpdate = App\Suscripcion ::where('User_correoUser', '=', $correoUser)
+        ->where('Tag_nombreTag', '=', $nombreTag)
+        ->first();
+        $suscripcionUpdate->timestamps = false;
+        $suscripcionUpdate->ignora = $request->ignora;
+
+        return back()->with('update', 'Se ha modificado la suscripcion con exito');
     }
 
     /**
@@ -78,8 +103,12 @@ class SuscripcionController extends Controller
      * @param  \App\Suscripcion  $suscripcion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Suscripcion $suscripcion)
+    public function destroy($correoUser, $nombreTag)
     {
-        //
+        $suscripcionEliminar = App\Suscripcion ::where('User_correoUser', '=', $correoUser)
+        ->where('Tag_nombreTag', '=', $nombreTag)
+        ->first();
+        $suscripcionEliminar->delete();
+        return back()->with('eliminar', 'Se elimino la suscripcion con exito');
     }
 }

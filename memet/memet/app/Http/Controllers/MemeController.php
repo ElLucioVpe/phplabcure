@@ -14,7 +14,7 @@ class MemeController extends Controller
      */
     public function index()
     {
-        //
+        //-----------------------------
     }
 
     /**
@@ -24,7 +24,7 @@ class MemeController extends Controller
      */
     public function create()
     {
-        //
+        //-----------------------------
     }
 
     /**
@@ -33,10 +33,23 @@ class MemeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) 
     {
+        $memeAgregar = new Meme;
+        //pido que al menos tenga un tag
+        $request->validate(['rutaMeme'=>'required']);
+        $request->validate(['tags'=>'required']);
         //
-    }
+        $memeAgregar->timestamps = false;
+        $memeAgregar->fechaMeme = $request->fechaMeme;
+        $memeAgregar->rutaMeme = $request->rutaMeme;
+        $memeAgregar->User_correoUser = $request->User_correoUser;
+        $memeAgregar->tags = $request->tags;
+        //save
+        $memeAgregar->save();
+
+        return back()->with('agregar', 'El meme fue subido con exito');
+    } 
 
     /**
      * Display the specified resource.
@@ -44,9 +57,10 @@ class MemeController extends Controller
      * @param  \App\Meme  $meme
      * @return \Illuminate\Http\Response
      */
-    public function show(Meme $meme)
+    public function show($idMeme)
     {
-        //
+        $memeMostrar = App\Meme :: findOrFail($idMeme);
+        return view('mostrar', compact('memeMostrar'));
     }
 
     /**
@@ -55,9 +69,10 @@ class MemeController extends Controller
      * @param  \App\Meme  $meme
      * @return \Illuminate\Http\Response
      */
-    public function edit(Meme $meme)
+    public function edit($idMeme)
     {
-        //
+        $memeModificar = App\Meme :: findOrFail($idMeme);
+        return view('editar', compact('memeModificar'));
     }
 
     /**
@@ -67,9 +82,14 @@ class MemeController extends Controller
      * @param  \App\Meme  $meme
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Meme $meme)
+    public function update(Request $request, $idMeme)
     {
-        //
+        $memeUpdate = App\Meme :: findOrFail($idMeme);
+        $memeUpdate->timestamps = false;
+        //$memeUpdate->fechaMeme = $request->fechaMeme;
+        $memeUpdate->rutaMeme = $request->rutaMeme;
+        $memeUpdate->tags = $request->tags;
+        return back()->with('update', 'El meme fue modificado con exito');
     }
 
     /**
@@ -78,8 +98,10 @@ class MemeController extends Controller
      * @param  \App\Meme  $meme
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Meme $meme)
+    public function destroy($idMeme)
     {
-        //
+        $memeEliminar = App\Meme :: findOrFail($idMeme);
+        $memeEliminar->delete();
+        return back()->with('eliminar', 'El meme fue eliminado con exito');
     }
 }
