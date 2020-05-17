@@ -35,7 +35,12 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tagAgregar = new Tag;
+        $request->validate(['nombreTag'=>'required']);
+        $estAgregar->timestamps = false;
+        $estAgregar->nombreTag = $request->nombreTag;
+        $estAgregar->save();
+        return back()->with('agregar','Tag agregado con exito');   
     }
 
     /**
@@ -55,9 +60,9 @@ class TagController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tag $tag)
+    public function edit($nombreTag)
     {
-        //
+      
     }
 
     /**
@@ -67,9 +72,11 @@ class TagController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tag $tag)
+    public function update(Request $request, $nombreTag)
     {
-        //
+        $tagUpdate = App\Tag :: findOrFail($nombreTag);
+        $tagUpdate->timestamps = false;
+        //No se que editar aca, perdoname esteby soy tontito
     }
 
     /**
@@ -78,8 +85,10 @@ class TagController extends Controller
      * @param  \App\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag $tag)
+    public function destroy($nombreTag)
     {
-        //
+        $TagEliminar =  App\Tag :: findOrFail($nombreTag);
+        $TagEliminar->delete();
+        return back()->with('eliminar','El tag ha sido eliminado con exito');
     }
 }

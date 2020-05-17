@@ -35,7 +35,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $userAgregar = new User;
+        //validacion back podemos hacerla o no shkerre
+        $request->validate(['correoUser'=>'required']);
+        //sacamos los timestamps
+        $userAgregar->timestamps = false;
+        $userAgregar->correoUser = $request->correoUser;
+        $userAgregar->nickUser =  $request->nickUser;
+        $userAgregar->passwordUser =  $request->passwordUser;
+        $userAgregar->tipoUser =  $request->tipoUser;
+        $userAgregar->nivelUser =  $request->nivelUser;
+        $UserAvatar ="gualby.jpg";
+        if($request->avatarUser!=null){
+        $userAgregar->avatarUser =  $request->avatarUser;
+        }else{
+        $userAgregar->avatarUser =  $UserAvatar;
+        }
+        //Hacemos save en bd
+        $userAgregar->save();
+        //Aca podriamos retornar al index logeado o al login
+        return back()->with('agregar','User agregado con exito'); 
     }
 
     /**
@@ -67,9 +86,18 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $correoUser)
     {
-        //
+        $userUpdate = App\User :: findOrFail($correoUser);
+        $userUpdate->timestamps = false;
+        $userUpdate->nickUser=$request->nickUser;
+        $userUpdate->passwordUser=$request->passwordUser;
+        if($request->passwordUser!=null){
+        $userUpdate->avatarUser=$request->avatarUser;
+        }
+        $userUpdate->save();
+        return back()->with('update', 'User Actualizado');
+
     }
 
     /**
@@ -78,8 +106,10 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($correoUser)
     {
-        //
+        $userEliminar =  App\User :: findOrFail($correoUser);
+        $userEliminar->delete();
+        return back()->with('eliminar','User eliminado con exito');
     }
 }
