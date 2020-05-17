@@ -14,7 +14,7 @@ class PuntuacionController extends Controller
      */
     public function index()
     {
-        //
+        //----------------------------------
     }
 
     /**
@@ -24,7 +24,7 @@ class PuntuacionController extends Controller
      */
     public function create()
     {
-        //
+        //-----------------------------------
     }
 
     /**
@@ -33,9 +33,21 @@ class PuntuacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) 
     {
+        $puntuacionAgregar = new Puntuacion;
         //
+        $request->validate(['User_correoUser'=>'required']);
+        $request->validate(['Meme_idMeme'=>'required']);
+        //
+        $puntuacionAgregar->timestamps = false;
+        $puntuacionAgregar->User_correoUser = $request->User_correoUser;
+        $puntuacionAgregar->Meme_idMeme = $request->Meme_idMeme;
+        $puntuacionAgregar->valorPuntuacion = $request->valorPuntuacion;
+        //save
+        $puntuacionAgregar->save();
+
+        return back()->with('agregar', 'A puntuado con exito el meme');
     }
 
     /**
@@ -44,9 +56,12 @@ class PuntuacionController extends Controller
      * @param  \App\Puntuacion  $puntuacion
      * @return \Illuminate\Http\Response
      */
-    public function show(Puntuacion $puntuacion)
+    public function show($correoUser, $meme_id)
     {
-        //
+        $puntuacionMostrar = App\Puntuacion ::where('User_correoUser', '=', $correoUser)
+        ->where('Meme_idMeme', '=', $meme_id)
+        ->first();
+        return view('mostrar', compact('puntuacionMostrar'));
     }
 
     /**
@@ -57,7 +72,7 @@ class PuntuacionController extends Controller
      */
     public function edit(Puntuacion $puntuacion)
     {
-        //
+        //--------------------------------
     }
 
     /**
@@ -69,7 +84,7 @@ class PuntuacionController extends Controller
      */
     public function update(Request $request, Puntuacion $puntuacion)
     {
-        //
+        //--------------------------------
     }
 
     /**
@@ -78,8 +93,12 @@ class PuntuacionController extends Controller
      * @param  \App\Puntuacion  $puntuacion
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Puntuacion $puntuacion)
+    public function destroy($correoUser, $meme_id)
     {
-        //
+        $puntuacionEliminar = App\Puntuacion ::where('User_correoUser', '=', $correoUser)
+        ->where('Meme_idMeme', '=', $meme_id)
+        ->first();
+        $puntuacionEliminar->delete();
+        return back()->with('eliminar', 'Dejo de puntuar este meme');
     }
 }
