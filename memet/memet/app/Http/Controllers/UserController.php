@@ -37,14 +37,14 @@ class UserController extends Controller
     {
         $userAgregar = new User;
         //validacion back podemos hacerla o no shkerre
-        $request->validate(['correoUser'=>'required']);
+        $request->validate(['correo'=>'required']);
         //sacamos los timestamps
         $userAgregar->timestamps = false;
-        $userAgregar->correoUser = $request->correoUser;
-        $userAgregar->nickUser =  $request->nickUser;
-        $userAgregar->passwordUser =  $request->passwordUser;
-        $userAgregar->tipoUser =  $request->tipoUser;
-        $userAgregar->nivelUser =  $request->nivelUser;
+        $userAgregar->correoUser = $request->correo;
+        $userAgregar->nickUser =  $request->nick;
+        $userAgregar->passwordUser =  $request->password;
+        $userAgregar->tipoUser =  "normy";
+        $userAgregar->nivelUser =  0;
         $UserAvatar ="gualby.jpg";
         if($request->avatarUser!=null){
         $userAgregar->avatarUser =  $request->avatarUser;
@@ -54,7 +54,7 @@ class UserController extends Controller
         //Hacemos save en bd
         $userAgregar->save();
         //Aca podriamos retornar al index logeado o al login
-        return back()->with('agregar','User agregado con exito'); 
+        return back()->with('agregar','Cuenta creada con exito'); 
     }
 
     /**
