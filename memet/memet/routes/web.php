@@ -17,13 +17,13 @@ Route::get('/registro', function () {
     return view('altaUser');
 });
 
-Route::post('/crearCuenta','UserController@store')->name('store2');
+Route::post('/crearCuenta', 'UserController@store')->name('store2');
 
 Route::get('/', function () {
     return view('index');
 });
 
-Route::post('/subirMeme','MemeController@store')->name('store');
+Route::post('/subirMeme', 'MemeController@store')->name('store');
 
 Route::get('/subir', function () {
     return view('altaMeme');

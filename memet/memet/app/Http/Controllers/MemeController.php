@@ -38,13 +38,21 @@ class MemeController extends Controller
         $memeAgregar = new Meme;
         //pido que al menos tenga un tag
         $request->validate(['rutaMeme'=>'required']);
+        $request->validate(['rutaMeme'=>'image|mimes:jpeg,png,jpg|max:2048']);
         $request->validate(['tags'=>'required']);
         //
+
         $memeAgregar->timestamps = false;
-        $memeAgregar->fechaMeme = date("d/m/Y");
-        $memeAgregar->rutaMeme = $request->rutaMeme;
+        $memeAgregar->fechaMeme = date("Y-m-d H-i-s");
         $memeAgregar->User_correoUser = $request->correoUser;
         $memeAgregar->tags = $request->tags;
+
+        $image = $request->file('rutaMeme');
+        $file_name = str_replace('.', '-', $request->correoUser);
+        $file_name = $memeAgregar->fechaMeme.preg_replace('/[^A-Za-z0-9\-]/', '-', $file_name).".png";
+        $image->move(public_path("memeFiles"), $file_name);
+        $memeAgregar->rutaMeme = $file_name;
+
         //save
         $memeAgregar->save();
 
