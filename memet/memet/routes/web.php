@@ -18,3 +18,9 @@ Route::get('/', function () {
 });
 
 Route::post('/crearCuenta','UserController@store')->name('store');
+
+Route::get('/', function () {
+    return view('altaMeme');
+});
+
+Route::post('/subirMeme','MemeController@store')->name('store');
