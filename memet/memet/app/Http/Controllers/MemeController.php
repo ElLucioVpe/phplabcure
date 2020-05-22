@@ -49,7 +49,7 @@ class MemeController extends Controller
 
         $image = $request->file('rutaMeme');
         $file_name = str_replace('.', '-', $request->correoUser);
-        $file_name = $memeAgregar->fechaMeme.preg_replace('/[^A-Za-z0-9\-]/', '', $file_name).".png";
+        $file_name = $memeAgregar->fechaMeme.preg_replace('/[^A-Za-z0-9\-]/', '-', $file_name).".png";
         $image->move(public_path("memeFiles"), $file_name);
         $memeAgregar->rutaMeme = $file_name;
 
