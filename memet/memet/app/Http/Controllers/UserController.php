@@ -45,14 +45,25 @@ class UserController extends Controller
         $userAgregar->passwordUser =  $request->password;
         $userAgregar->tipoUser =  "normy";
         $userAgregar->nivelUser =  0;
-        $UserAvatar ="gualby.jpg";
-        if($request->avatarUser!=null){
-        $userAgregar->avatarUser =  $request->avatarUser;
+
+        $UserAvatar ="gualby.png";
+        
+        
+
+        if($request->avatar!=null){
+            $request->validate(['avatar'=>'image|mimes:jpeg,png,jpg|max:2048']);
+            $image = $request->file('avatar');
+            $new_name = $request->correo.'.png';
+            $image->move(public_path("profileImages"),$new_name);
+
+            $userAgregar->avatarUser =  $request->correo.'.png';
         }else{
-        $userAgregar->avatarUser =  $UserAvatar;
+            $userAgregar->avatarUser =  $UserAvatar;
         }
+
         //Hacemos save en bd
         $userAgregar->save();
+
         //Aca podriamos retornar al index logeado o al login
         return back()->with('agregar','Cuenta creada con exito'); 
     }
