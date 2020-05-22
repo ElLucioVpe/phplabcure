@@ -11,7 +11,7 @@
         <div class="col-md-6">
             <h3 class="text-center mb-4">Subir Meme</h3>
 
-            <form action="{{route('store')}}" method="POST">
+            <form action="{{route('store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="rutaMeme">Seleccione una archivo para subir:</label>
