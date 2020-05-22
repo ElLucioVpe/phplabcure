@@ -22,6 +22,11 @@
                         Por favor seleccione una imagen o video para subir.
                     </div>
                 @enderror
+                
+                <div class="form-group">
+                    <label for="tags">Tag/s:</label>
+                    <input type="text" name="tags" id="tags" placeholder="Meme">
+                </div>
 
                 <button type="submit" class="btn btn-success btn-block">Subir</button>
 
