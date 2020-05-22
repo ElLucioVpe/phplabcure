@@ -13,18 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/registro', function () {
+Route::get('/', function () {
     return view('altaUser');
 });
 
-Route::post('/crearCuenta', 'UserController@store')->name('store2');
+Route::post('/crearCuenta','UserController@store')->name('store');
 
-Route::get('/', function () {
-    return view('index');
-});
-
-Route::post('/subirMeme', 'MemeController@store')->name('store');
-
-Route::get('/subir', function () {
+Route::get('/subirMeme', function () {
     return view('altaMeme');
 });
+
+Route::post('/subirMeme','MemeController@store')->name('storeMeme');

@@ -36,16 +36,15 @@ class MemeController extends Controller
     public function store(Request $request) 
     {
         $memeAgregar = new Meme;
-        //pido que al menos tenga un tag
+        //
         $request->validate(['rutaMeme'=>'required']);
         $request->validate(['rutaMeme'=>'image|mimes:jpeg,png,jpg|max:2048']);
-        $request->validate(['tags'=>'required']);
+        //$request->validate(['tags'=>'required']);
         //
 
         $memeAgregar->timestamps = false;
         $memeAgregar->fechaMeme = date("Y-m-d H-i-s");
         $memeAgregar->User_correoUser = $request->correoUser;
-        $memeAgregar->tags = $request->tags;
 
         $image = $request->file('rutaMeme');
         $file_name = str_replace('.', '-', $request->correoUser);

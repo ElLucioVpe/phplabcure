@@ -37,9 +37,9 @@ class TagController extends Controller
     {
         $tagAgregar = new Tag;
         $request->validate(['nombreTag'=>'required']);
-        $estAgregar->timestamps = false;
-        $estAgregar->nombreTag = $request->nombreTag;
-        $estAgregar->save();
+        $tagAgregar->timestamps = false;
+        $tagAgregar->nombreTag = $request->nombreTag;
+        $tagAgregar->save();
         return back()->with('agregar','Tag agregado con exito');   
     }
 

@@ -35,7 +35,20 @@ class Tag_has_MemeController extends Controller
      */
     public function store(Request $request)
     {
+        $tagMAgregar = new Tag_has_Meme;
         //
+        $request->validate(['Tag_nombreTag'=>'required']);
+        $request->validate(['Meme_idMeme'=>'required']);
+        //
+
+        $tagMAgregar->timestamps = false;
+        $tagMAgregar->Tag_nombreTag = $request->nombreTag;
+        $tagMAgregar->Meme_idMeme = $request->idMeme;
+
+        //save
+        $tagMAgregar->save();
+
+        //return back()->with('agregar', 'El meme fue subido con exito');
     }
 
     /**

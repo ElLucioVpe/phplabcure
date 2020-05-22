@@ -12,7 +12,11 @@
   </head>
   <body>
 
-  @yield('content')
+    <!-- El yield aca cambia el content -->
+    <div class="container pt-5">
+        @yield('content')
+    </div>
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
