@@ -36,7 +36,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $userAgregar = new User;
-        echo "doooou";
         //validacion back podemos hacerla o no shkerre
         $request->validate(['correo'=>'required']);
         //sacamos los timestamps
@@ -48,6 +47,8 @@ class UserController extends Controller
         $userAgregar->nivelUser =  0;
 
         $UserAvatar ="gualby.png";
+        
+        
 
         if($request->avatar!=null){
             $request->validate(['avatar'=>'image|mimes:jpeg,png,jpg|max:2048']);
@@ -64,7 +65,7 @@ class UserController extends Controller
         $userAgregar->save();
 
         //Aca podriamos retornar al index logeado o al login
-        return back()->with('agregar','Cuenta creada con exito');
+        return back()->with('agregar','Cuenta creada con exito'); 
     }
 
     /**

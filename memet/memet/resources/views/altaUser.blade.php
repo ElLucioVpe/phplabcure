@@ -9,11 +9,11 @@
 
         <div class="col-md-12">
 
-            {{--Form--}}
-            <center>
+          {{--Form--}}
+        <center>
             <div class="col-md-6">
                 <h3 class="text-center mb-4">Crear Cuenta</h3>
-
+    
                 <form action="{{route('store')}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
@@ -33,18 +33,18 @@
                     <div class="form-group">
                         <input type="file" name="avatar" id="avatar" class="form-control">
                     </div>
-
+    
                     <button type="submit" class="btn btn-success btn-block">Crear Cuenta</button>
-
+    
                 </form>
-
+    
                 @if (session('agregar'))
                     <div class="alert alert-success mt-3">
                         {{session('agregar')}}
                     </div>
                 @endif
-
-
+    
+    
             </div>
              {{--Fin Form--}}
             </center>
