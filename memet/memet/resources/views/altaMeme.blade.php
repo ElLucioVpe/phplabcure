@@ -14,8 +14,8 @@
             <form action="{{route('store')}}" method="POST">
                 @csrf
                 <div class="form-group">
-                    <label for="rutameme">Seleccione una archivo para subir:</label>
-                    <input type="file" name="rutameme" id="rutameme" placeholder="Meme" required>
+                    <label for="rutaMeme">Seleccione una archivo para subir:</label>
+                    <input type="file" name="rutaMeme" id="rutaMeme" placeholder="Meme" required>
                 </div>
                 @error('correo')
                     <div class="alert alert-danger">
@@ -27,6 +27,8 @@
                     <label for="tags">Tag/s:</label>
                     <input type="text" name="tags" id="tags" placeholder="Meme">
                 </div>
+
+                <input type="hidden" name="correoUser" id="correoUser" value="usuarioSesion">
 
                 <button type="submit" class="btn btn-success btn-block">Subir</button>
 

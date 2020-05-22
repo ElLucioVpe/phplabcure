@@ -41,9 +41,9 @@ class MemeController extends Controller
         $request->validate(['tags'=>'required']);
         //
         $memeAgregar->timestamps = false;
-        $memeAgregar->fechaMeme = $request->fechaMeme;
+        $memeAgregar->fechaMeme = date("d/m/Y");
         $memeAgregar->rutaMeme = $request->rutaMeme;
-        $memeAgregar->User_correoUser = $request->User_correoUser;
+        $memeAgregar->User_correoUser = $request->correoUser;
         $memeAgregar->tags = $request->tags;
         //save
         $memeAgregar->save();
