@@ -43,7 +43,7 @@ class MemeController extends Controller
         //
 
         $memeAgregar->timestamps = false;
-        $memeAgregar->fechaMeme = date("Y-m-d H:i:s");
+        $memeAgregar->fechaMeme = date("Y-m-d H-i-s");
         $memeAgregar->User_correoUser = $request->correoUser;
         $memeAgregar->tags = $request->tags;
 
