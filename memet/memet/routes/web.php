@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    return view('index');
+});
+
+Route::get('/registro', function () {
     return view('altaUser');
 });
 
@@ -24,3 +28,7 @@ Route::get('/subirMeme', function () {
 });
 
 Route::post('/subirMeme','MemeController@store')->name('storeMeme');
+
+Route::get('/suscripciones/{correoUser}','SuscripcionController@suscripcionesUser')->name('suscripciones');
+
+Route::delete('/eliminarSuscripcion/{correoUser}/{tag}','SuscripcionController@destroy')->name('eliminarSuscripcion');

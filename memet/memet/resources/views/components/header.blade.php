@@ -9,7 +9,7 @@
                 <a class="nav-link" href="/">Link</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/subir">Subir meme</a>
+                <a class="nav-link" href="/subirMeme">Subir meme</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">

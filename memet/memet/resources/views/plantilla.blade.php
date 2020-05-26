@@ -13,6 +13,7 @@
   <body>
 
     <!-- El yield aca cambia el content -->
+    <x-header/>
     <div class="container pt-5">
         @yield('content')
     </div>

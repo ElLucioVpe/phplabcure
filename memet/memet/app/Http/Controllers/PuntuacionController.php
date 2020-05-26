@@ -58,7 +58,7 @@ class PuntuacionController extends Controller
      */
     public function show($correoUser, $meme_id)
     {
-        $puntuacionMostrar = App\Puntuacion ::where('User_correoUser', '=', $correoUser)
+        $puntuacionMostrar = Puntuacion ::where('User_correoUser', '=', $correoUser)
         ->where('Meme_idMeme', '=', $meme_id)
         ->first();
         return view('mostrar', compact('puntuacionMostrar'));
@@ -95,7 +95,7 @@ class PuntuacionController extends Controller
      */
     public function destroy($correoUser, $meme_id)
     {
-        $puntuacionEliminar = App\Puntuacion ::where('User_correoUser', '=', $correoUser)
+        $puntuacionEliminar = Puntuacion ::where('User_correoUser', '=', $correoUser)
         ->where('Meme_idMeme', '=', $meme_id)
         ->first();
         $puntuacionEliminar->delete();

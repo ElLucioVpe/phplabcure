@@ -99,7 +99,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $correoUser)
     {
-        $userUpdate = App\User :: findOrFail($correoUser);
+        $userUpdate = User :: findOrFail($correoUser);
         $userUpdate->timestamps = false;
         $userUpdate->nickUser=$request->nickUser;
         $userUpdate->passwordUser=$request->passwordUser;
@@ -119,7 +119,7 @@ class UserController extends Controller
      */
     public function destroy($correoUser)
     {
-        $userEliminar =  App\User :: findOrFail($correoUser);
+        $userEliminar =  User :: findOrFail($correoUser);
         $userEliminar->delete();
         return back()->with('eliminar','User eliminado con exito');
     }
