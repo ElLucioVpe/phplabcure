@@ -44,7 +44,7 @@ class UserController extends Controller
         $userAgregar->nickUser =  $request->nick;
         $userAgregar->passwordUser =  $request->password;
         $userAgregar->tipoUser =  "normy";
-        $userAgregar->nivelUser =  0;
+        $userAgregar->experienciaUser =  0;
 
         $UserAvatar ="gualby.png";
         
@@ -87,7 +87,7 @@ class UserController extends Controller
      */
     public function edit($correoUser)
     {
-        $userActualizar = App\User::findOrFail($correoUser);
+        $userActualizar = User::findOrFail($correoUser);
         return view('editarUser',compact('userActualizar'));
     }
 
@@ -100,7 +100,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $correoUser)
     {
-        $userUpdate = App\User :: findOrFail($correoUser);
+        $userUpdate = User :: findOrFail($correoUser);
         $userUpdate->timestamps = false;
         $userUpdate->nickUser=$request->nickUser;
         $userUpdate->passwordUser=$request->passwordUser;
@@ -136,5 +136,11 @@ class UserController extends Controller
         $userEliminar =  User :: findOrFail($correoUser);
         $userEliminar->delete();
         return back()->with('eliminar','User eliminado con exito');
+    }
+
+    public function nivelUsuario($experiencia)
+    {
+        $nivel = (int) (floor(25 + sqrt(625 + 100 * $experiencia)) / 50);
+        return $nivel;
     }
 }
