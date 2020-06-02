@@ -26,6 +26,12 @@
 
         </form>
  
+    <form action="{{route('eliminarUser', $userActualizar->correoUser)}}" method="POST" class="d-inline">
+            @method('DELETE')
+            @csrf
+            <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+    </form>
+
     @if (session('update'))
     <div class="alert alert-success mt-3">
         {{session('update')}}

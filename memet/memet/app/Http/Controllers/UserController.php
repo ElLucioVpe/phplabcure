@@ -134,8 +134,17 @@ class UserController extends Controller
     public function destroy($correoUser)
     {
         $userEliminar =  User :: findOrFail($correoUser);
+    
+        $userEliminar->puntuacions()->delete();
+        $userEliminar->suscripcions()->delete();
+        
+        $Mcontroller = new MemeController();
+        foreach ( $userEliminar->memes as $Meme) {
+            $Mcontroller->desreferenciarMeme($Meme->idMeme);
+        }
+
         $userEliminar->delete();
-        return back()->with('eliminar','User eliminado con exito');
+        return back()->with('index','User eliminado con exito');
     }
 
     public function nivelUsuario($experiencia)

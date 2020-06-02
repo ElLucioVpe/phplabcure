@@ -111,4 +111,12 @@ class MemeController extends Controller
         $memeEliminar->delete();
         return back()->with('eliminar', 'El meme fue eliminado con exito');
     }
+
+    public function desreferenciarMeme($idMeme)
+    {
+        $memeUpdate = Meme :: findOrFail($idMeme);
+        $memeUpdate->timestamps = false;
+        $memeUpdate->User_correoUser = null;
+        $memeUpdate->save();
+    }
 }
