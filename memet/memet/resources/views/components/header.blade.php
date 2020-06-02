@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ route('index') }}">Link</a>
+                <a class="nav-link" href="/">Link</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/subirMeme">Subir meme</a>
@@ -19,10 +19,10 @@
         </form>
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                <a class="nav-link" href="/login">Login</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="href=" {{ route('altaUser') }}"">Registrate!</a>
+                <a class="nav-link" href="/registro">Registrate!</a>
             </li>
         </ul>
     </div>
