@@ -10,7 +10,7 @@
                 <a class="nav-link" href="{{ route('index') }}">Link</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('altaMeme') }}">Subir meme</a>
+                <a class="nav-link" href="/subirMeme">Subir meme</a>
             </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0 ml-auto mr-2">
@@ -22,7 +22,7 @@
                 <a class="nav-link" href="{{ route('login') }}">Login</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="href="{{ route('altaUser') }}"">Registrate!</a>
+                <a class="nav-link" href="href=" {{ route('altaUser') }}"">Registrate!</a>
             </li>
         </ul>
     </div>

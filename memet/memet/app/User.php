@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property string $correoUser
- * @property string $nickUser
+ * @property string $experienciaUser
  * @property string $passwordUser
  * @property string $tipoUser
  * @property int $nivelUser

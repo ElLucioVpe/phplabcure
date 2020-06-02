@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Suscripcion;
+
 use Illuminate\Http\Request;
 
 class SuscripcionController extends Controller
@@ -15,6 +17,14 @@ class SuscripcionController extends Controller
     public function index()
     {
         //
+    }
+
+    public function suscripcionesUser($correoUser) 
+    {
+        $user = User :: findOrFail($correoUser);
+        $suscripciones = $user->suscripcions;
+
+        return view('suscripciones', compact('suscripciones'));
     }
 
     /**
@@ -58,7 +68,7 @@ class SuscripcionController extends Controller
      */
     public function show($correoUser, $nombreTag)
     {
-        $suscripcionMostrar = App\Suscripcion ::where('User_correoUser', '=', $correoUser)
+        $suscripcionMostrar = Suscripcion ::where('User_correoUser', '=', $correoUser)
         ->where('Tag_nombreTag', '=', $nombreTag)
         ->first();
         return view('mostrar', compact('suscripcionMostrar'));
@@ -72,7 +82,7 @@ class SuscripcionController extends Controller
      */
     public function edit($correoUser, $nombreTag)
     {
-        $suscripcionModificar = App\Suscripcion ::where('User_correoUser', '=', $correoUser)
+        $suscripcionModificar = Suscripcion ::where('User_correoUser', '=', $correoUser)
         ->where('Tag_nombreTag', '=', $nombreTag)
         ->first();
 
@@ -88,7 +98,7 @@ class SuscripcionController extends Controller
      */
     public function update(Request $request, $correoUser, $nombreTag)
     {
-        $suscripcionUpdate = App\Suscripcion ::where('User_correoUser', '=', $correoUser)
+        $suscripcionUpdate = Suscripcion ::where('User_correoUser', '=', $correoUser)
         ->where('Tag_nombreTag', '=', $nombreTag)
         ->first();
         $suscripcionUpdate->timestamps = false;
@@ -105,7 +115,7 @@ class SuscripcionController extends Controller
      */
     public function destroy($correoUser, $nombreTag)
     {
-        $suscripcionEliminar = App\Suscripcion ::where('User_correoUser', '=', $correoUser)
+        $suscripcionEliminar = Suscripcion ::where('User_correoUser', '=', $correoUser)
         ->where('Tag_nombreTag', '=', $nombreTag)
         ->first();
         $suscripcionEliminar->delete();

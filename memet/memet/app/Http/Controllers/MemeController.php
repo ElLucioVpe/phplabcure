@@ -66,7 +66,7 @@ class MemeController extends Controller
      */
     public function show($idMeme)
     {
-        $memeMostrar = App\Meme :: findOrFail($idMeme);
+        $memeMostrar = Meme :: findOrFail($idMeme);
         return view('mostrar', compact('memeMostrar'));
     }
 
@@ -78,7 +78,7 @@ class MemeController extends Controller
      */
     public function edit($idMeme)
     {
-        $memeModificar = App\Meme :: findOrFail($idMeme);
+        $memeModificar = Meme :: findOrFail($idMeme);
         return view('editar', compact('memeModificar'));
     }
 
@@ -91,7 +91,7 @@ class MemeController extends Controller
      */
     public function update(Request $request, $idMeme)
     {
-        $memeUpdate = App\Meme :: findOrFail($idMeme);
+        $memeUpdate = Meme :: findOrFail($idMeme);
         $memeUpdate->timestamps = false;
         //$memeUpdate->fechaMeme = $request->fechaMeme;
         $memeUpdate->rutaMeme = $request->rutaMeme;
@@ -107,7 +107,7 @@ class MemeController extends Controller
      */
     public function destroy($idMeme)
     {
-        $memeEliminar = App\Meme :: findOrFail($idMeme);
+        $memeEliminar = Meme :: findOrFail($idMeme);
         $memeEliminar->delete();
         return back()->with('eliminar', 'El meme fue eliminado con exito');
     }

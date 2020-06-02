@@ -74,7 +74,7 @@ class TagController extends Controller
      */
     public function update(Request $request, $nombreTag)
     {
-        $tagUpdate = App\Tag :: findOrFail($nombreTag);
+        $tagUpdate = Tag :: findOrFail($nombreTag);
         $tagUpdate->timestamps = false;
         //No se que editar aca, perdoname esteby soy tontito
     }
@@ -87,7 +87,7 @@ class TagController extends Controller
      */
     public function destroy($nombreTag)
     {
-        $TagEliminar =  App\Tag :: findOrFail($nombreTag);
+        $TagEliminar = Tag :: findOrFail($nombreTag);
         $TagEliminar->delete();
         return back()->with('eliminar','El tag ha sido eliminado con exito');
     }
