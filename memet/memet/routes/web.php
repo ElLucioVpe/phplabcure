@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('altaUser');
+    return view('index');
 });
 
 Route::post('/crearCuenta','UserController@store')->name('store');
