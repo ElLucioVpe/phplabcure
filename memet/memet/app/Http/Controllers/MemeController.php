@@ -37,12 +37,14 @@ class MemeController extends Controller
     {
         $memeAgregar = new Meme;
         //
+        $request->validate(['tituloMeme'=>'required']);
         $request->validate(['rutaMeme'=>'required']);
         $request->validate(['rutaMeme'=>'image|mimes:jpeg,png,jpg|max:2048']);
         //$request->validate(['tags'=>'required']);
         //
 
         $memeAgregar->timestamps = false;
+        $memeAgregar->tituloMeme = $request->tituloMeme;
         $memeAgregar->fechaMeme = date("Y-m-d H-i-s");
         $memeAgregar->User_correoUser = $request->correoUser;
 
@@ -79,7 +81,7 @@ class MemeController extends Controller
     public function edit($idMeme)
     {
         $memeModificar = Meme :: findOrFail($idMeme);
-        return view('editar', compact('memeModificar'));
+        return view('editarMeme', compact('memeModificar'));
     }
 
     /**
@@ -93,7 +95,7 @@ class MemeController extends Controller
     {
         $memeUpdate = Meme :: findOrFail($idMeme);
         $memeUpdate->timestamps = false;
-        //$memeUpdate->fechaMeme = $request->fechaMeme;
+        $memeUpdate->tituloMeme = $request->tituloMeme;
         $memeUpdate->rutaMeme = $request->rutaMeme;
         $memeUpdate->tags = $request->tags;
         return back()->with('update', 'El meme fue modificado con exito');

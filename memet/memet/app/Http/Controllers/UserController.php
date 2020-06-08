@@ -74,9 +74,12 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($correoUser)
     {
-        //
+        $userMostrar = User::findOrFail($correoUser);
+        $nivelUser = $this->nivelUsuario($userMostrar->experienciaUser);
+        $rutaAvatar = public_path('avatar');
+        return view('perfilUser',compact('userMostrar', 'nivelUser', 'rutaAvatar'));
     }
 
     /**

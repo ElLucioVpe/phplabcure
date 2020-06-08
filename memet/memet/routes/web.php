@@ -22,6 +22,7 @@ Route::get('/registro', function () {
 });
 Route::post('/crearCuenta','UserController@store')->name('store');
 
+Route::get('/perfilUser/{correoUser}','UserController@show')->name('perfilUser');
 Route::get('/editarUser/{correoUser}','UserController@editar')->name('editarUser');
 Route::put('/update/{correoUser}','UserController@update')->name('updateUser');
 Route::delete('/eliminarUser/{correoUser}','UserController@destroy')->name('eliminarUser');
@@ -30,6 +31,7 @@ Route::get('/subirMeme', function () {
     return view('altaMeme');
 });
 
+Route::get('/mostrarMeme/{idMeme}','MemeController@show')->name('mostrarMeme');
 Route::post('/subirMeme','MemeController@store')->name('storeMeme');
 
 Route::get('/suscripciones/{correoUser}','SuscripcionController@suscripcionesUser')->name('suscripciones');

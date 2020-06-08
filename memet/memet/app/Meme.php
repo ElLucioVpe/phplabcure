@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property int $idMeme
+ * @property string $tituloMeme
  * @property string $fechaMeme
  * @property string $rutaMeme
  * @property string $User_correoUser
