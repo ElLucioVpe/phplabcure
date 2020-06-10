@@ -33,21 +33,21 @@ class PuntuacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) 
+    public function store($correoUser, $meme_id, $valor) 
     {
         $puntuacionAgregar = new Puntuacion;
-        //
+        /*
         $request->validate(['User_correoUser'=>'required']);
         $request->validate(['Meme_idMeme'=>'required']);
-        //
+        */
         $puntuacionAgregar->timestamps = false;
-        $puntuacionAgregar->User_correoUser = $request->User_correoUser;
-        $puntuacionAgregar->Meme_idMeme = $request->Meme_idMeme;
-        $puntuacionAgregar->valorPuntuacion = $request->valorPuntuacion;
+        $puntuacionAgregar->User_correoUser = $correoUser;
+        $puntuacionAgregar->Meme_idMeme = $meme_id;
+        $puntuacionAgregar->valorPuntuacion = $valor;
         //save
         $puntuacionAgregar->save();
 
-        return back()->with('agregar', 'A puntuado con exito el meme');
+        return back()->with('agregar', 'Ha puntuado con exito el meme');
     }
 
     /**
@@ -82,9 +82,19 @@ class PuntuacionController extends Controller
      * @param  \App\Puntuacion  $puntuacion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Puntuacion $puntuacion)
+    public function update($correoUser, $meme_id)
     {
-        //--------------------------------
+        $puntuacionUpdate = Puntuacion ::where('User_correoUser', '=', $correoUser)
+        ->where('Meme_idMeme', '=', $meme_id)
+        ->first();
+
+        $puntuacionUpdate->timestamps = false;
+        if($puntuacionUpdate->valorPuntuacion == 1) $puntuacionUpdate->valorPuntuacion = 0;
+        else $puntuacionUpdate->valorPuntuacion = 1;
+
+        $puntuacionUpdate->save();
+
+        return back()->with('update', 'El meme fue modificado con exito');
     }
 
     /**
@@ -100,5 +110,23 @@ class PuntuacionController extends Controller
         ->first();
         $puntuacionEliminar->delete();
         return back()->with('eliminar', 'Dejo de puntuar este meme');
+    }
+
+    public function puntuarMeme($correoUser, $meme_id, $valor) {
+        $puntuacion = Puntuacion ::where('User_correoUser', '=', $correoUser)
+        ->where('Meme_idMeme', '=', $meme_id)
+        ->first();
+        
+        //$test = "0";
+        if($puntuacion == null) { 
+            $this->store($correoUser, $meme_id, $valor);
+        } else if($puntuacion->valorPuntuacion != $valor) {
+            $this->update($correoUser, $meme_id);
+        } else {
+            $this->destroy($correoUser, $meme_id);
+        }
+
+        //return view('test', compact('test'));
+        
     }
 }

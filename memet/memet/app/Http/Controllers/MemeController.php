@@ -51,7 +51,7 @@ class MemeController extends Controller
         $image = $request->file('rutaMeme');
         $file_name = str_replace('.', '-', $request->correoUser);
         $file_name = $memeAgregar->fechaMeme.preg_replace('/[^A-Za-z0-9\-]/', '-', $file_name).".png";
-        $image->move(public_path("memeFiles"), $file_name);
+        $image->move(storage_path("app/public/memes"), $file_name);
         $memeAgregar->rutaMeme = $file_name;
 
         //save
@@ -69,7 +69,17 @@ class MemeController extends Controller
     public function show($idMeme)
     {
         $memeMostrar = Meme :: findOrFail($idMeme);
-        return view('mostrar', compact('memeMostrar'));
+        $puntuaciones = [0,0];
+
+        $memeMostrar->fechaMeme = preg_replace('/-/', '/', $memeMostrar->fechaMeme, 2);
+        $memeMostrar->fechaMeme = preg_replace('/-/', ':', $memeMostrar->fechaMeme, 2);
+
+        foreach($memeMostrar->puntuacions as $pun) {
+            if($pun->valorPuntuacion) $puntuaciones[0]++;
+            else $puntuaciones[1]++;
+        }
+
+        return view('mostrarMeme', compact('memeMostrar', 'puntuaciones'));
     }
 
     /**
@@ -98,6 +108,8 @@ class MemeController extends Controller
         $memeUpdate->tituloMeme = $request->tituloMeme;
         $memeUpdate->rutaMeme = $request->rutaMeme;
         $memeUpdate->tags = $request->tags;
+
+        $memeUpdate->save();
         return back()->with('update', 'El meme fue modificado con exito');
     }
 
