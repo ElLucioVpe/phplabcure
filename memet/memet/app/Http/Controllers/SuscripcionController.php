@@ -43,17 +43,24 @@ class SuscripcionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    
+    public function accionTag() {
+        $tag = Tag :: findOrFail($nombreTag);
+        $user = User :: findOrFail($correoUser);
+
+        
+    }
+    public function store($ignora, $nombreTag, $correoUser)
     {
         $suscripcionAgregar = new Suscripcion;
-        //
+        /*
         $request->validate(['User_correoUser'=>'required']);
         $request->validate(['Tag_nombreTag'=>'required']);
-        //
+        */
         $suscripcionAgregar->timestamps = false;
-        $suscripcionAgregar->User_correoUser = $request->User_correoUser;
-        $suscripcionAgregar->Tag_nombreTag = $request->Tag_nombreTag;
-        $suscripcionAgregar->ignora = $request->ignora;
+        $suscripcionAgregar->User_correoUser = $correoUser;
+        $suscripcionAgregar->Tag_nombreTag = $nombreTag;
+        $suscripcionAgregar->ignora = $ignora;
         //save
         $suscripcionAgregar->save();
 
@@ -96,13 +103,13 @@ class SuscripcionController extends Controller
      * @param  \App\Suscripcion  $suscripcion
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $correoUser, $nombreTag)
+    public function update($ignora, $nombreTag, $correoUser)
     {
         $suscripcionUpdate = Suscripcion ::where('User_correoUser', '=', $correoUser)
         ->where('Tag_nombreTag', '=', $nombreTag)
         ->first();
         $suscripcionUpdate->timestamps = false;
-        $suscripcionUpdate->ignora = $request->ignora;
+        $suscripcionUpdate->ignora = $ignora;
 
         return back()->with('update', 'Se ha modificado la suscripcion con exito');
     }
@@ -120,5 +127,27 @@ class SuscripcionController extends Controller
         ->first();
         $suscripcionEliminar->delete();
         return back()->with('eliminar', 'Se elimino la suscripcion con exito');
+    }
+
+    public function suscribirseTag($ignora, $nombreTag, $correoUser) {
+        $suscripcion = Suscripcion ::where('User_correoUser', '=', $correoUser)
+        ->where('Tag_nombreTag', '=', $nombreTag)
+        ->first();
+
+        $ignora = filter_var($ignora, FILTER_VALIDATE_BOOLEAN); //verifico/convierto boolean
+        $operacion = "";
+
+        if($suscripcion == null) { 
+            $this->store($ignora, $nombreTag, $correoUser);
+            $operacion = "store"; 
+        } else if($suscripcion->ignora != $ignora) {
+            $this->update($ignora, $nombreTag, $correoUser);
+            $operacion = "update"; 
+        } else {
+            $this->destroy($correoUser, $nombreTag);
+            $operacion = "destroy"; 
+        }
+
+        return $operacion;
     }
 }

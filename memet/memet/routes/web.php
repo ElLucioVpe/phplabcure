@@ -36,7 +36,7 @@ Route::post('/subirMeme','MemeController@store')->name('storeMeme');
 Route::post('/puntuarMeme/{correoUser}/{meme_id}/{valor}','PuntuacionController@puntuarMeme')->name('puntuarMeme');
 
 Route::get('/suscripciones/{correoUser}','SuscripcionController@suscripcionesUser')->name('suscripciones');
-
+Route::post('/suscribirseTag/{ignora}/{nombreTag}/{correoUser}','SuscripcionController@suscribirseTag')->name('suscribirseTag');
 Route::delete('/eliminarSuscripcion/{correoUser}/{tag}','SuscripcionController@destroy')->name('eliminarSuscripcion');
 
 

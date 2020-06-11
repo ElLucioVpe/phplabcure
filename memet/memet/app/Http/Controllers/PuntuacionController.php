@@ -117,16 +117,20 @@ class PuntuacionController extends Controller
         ->where('Meme_idMeme', '=', $meme_id)
         ->first();
         
-        //$test = "0";
+        $operacion = ["", $valor];
+
         if($puntuacion == null) { 
             $this->store($correoUser, $meme_id, $valor);
+            $operacion[0] = "store";
         } else if($puntuacion->valorPuntuacion != $valor) {
             $this->update($correoUser, $meme_id);
+            $operacion[0] = "update";
         } else {
             $this->destroy($correoUser, $meme_id);
+            $operacion[0] = "destroy";
         }
 
-        //return view('test', compact('test'));
+        return $operacion;
         
     }
 }
