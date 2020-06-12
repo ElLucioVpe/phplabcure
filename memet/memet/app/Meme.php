@@ -35,12 +35,12 @@ class Meme extends Model
      * 
      * @var bool
      */
-    public $incrementing = false;
+    public $incrementing = true;
 
     /**
      * @var array
      */
-    protected $fillable = ['fechaMeme', 'rutaMeme', 'User_correoUser'];
+    protected $fillable = ['fechaMeme', 'rutaMeme', 'User_correoUser', 'tags'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

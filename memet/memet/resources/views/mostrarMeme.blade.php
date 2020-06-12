@@ -18,11 +18,18 @@
             <div class="modal-footer-float-left">
                 <div class="tags-meme form-inline">
                     @foreach($memeMostrar->tags as $tag) 
-                        <span class="badge badge-secondary mx-1">
-                            <a onclick="mostrarVentanaTag('{{$tag->nombreTag}}')" href="#aboutModal" data-toggle="modal" 
-                                data-target="#tagActions" style="color: white;">
-                            {{$tag->nombreTag}}</a>
-                        </span>
+                        <h5>
+                            <span class="badge badge-secondary mx-1">
+                                <a onclick="mostrarVentanaTag('{{$tag->nombreTag}}')" href="#aboutModal" data-toggle="modal" 
+                                    data-target="#tagActions" style="color: white;">
+                                @if(strlen($tag->nombreTag)<=50)
+                                    {{$tag->nombreTag}}
+                                @else
+                                    {{substr($tag->nombreTag, 0, 50)."..."}}
+                                @endif
+                                </a>
+                            </span>
+                        </h5>
                     @endforeach
                 </div>
                 <!-- Ventana Suscribirse/Ignorar Tag -->
@@ -80,7 +87,7 @@
 
             $.ajax({ 
                 type:'POST',
-                url:'http://localhost:8000/puntuarMeme/'+user+'/'+meme+'/'+value,
+                url:"{{url('/puntuarMeme')}}"+'/'+user+'/'+meme+'/'+value,
                 success:function(data){
                     console.log(data);
                     var span = "like-span";
@@ -100,7 +107,7 @@
                     }
                     
                 },
-                error:function(){
+                error:function() {
                     console.log("Sucedio un error en la puntuacion");
                 }
             });
@@ -117,7 +124,7 @@
 
             $.ajax({ 
                 type:'POST',
-                url:'http://localhost:8000/suscribirseTag/'+ignora+'/'+tag+'/'+user,
+                url:"{{url('/suscribirseTag')}}"+'/'+ignora+'/'+tag+'/'+user,
                 success:function(data){
                     if(data == "store" || data == "update") {
                         if(!ignora) alert("Usted se ha suscripto al tag con exito");
@@ -126,7 +133,6 @@
                         if(!ignora) alert("Usted ya estaba suscripto al tag, por lo tanto ha dejado de estarlo");
                         else alert("Usted ya habia ignorado el tag, por lo tanto ha dejado de hacerlo");
                     }
-                        
                 },
                 error:function(){
                     alert("Sucedio un error en la operación\nInicie Sesion si no lo ha hecho");

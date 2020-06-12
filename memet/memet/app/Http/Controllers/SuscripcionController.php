@@ -110,6 +110,7 @@ class SuscripcionController extends Controller
         ->first();
         $suscripcionUpdate->timestamps = false;
         $suscripcionUpdate->ignora = $ignora;
+        $suscripcionUpdate->save();
 
         return back()->with('update', 'Se ha modificado la suscripcion con exito');
     }
@@ -137,7 +138,7 @@ class SuscripcionController extends Controller
         $ignora = filter_var($ignora, FILTER_VALIDATE_BOOLEAN); //verifico/convierto boolean
         $operacion = "";
 
-        if($suscripcion == null) { 
+        if($suscripcion == null) {
             $this->store($ignora, $nombreTag, $correoUser);
             $operacion = "store"; 
         } else if($suscripcion->ignora != $ignora) {

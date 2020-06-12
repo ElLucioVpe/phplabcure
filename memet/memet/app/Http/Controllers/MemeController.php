@@ -48,14 +48,20 @@ class MemeController extends Controller
         $memeAgregar->fechaMeme = date("Y-m-d H-i-s");
         $memeAgregar->User_correoUser = $request->correoUser;
 
+        //Guardo imagen
         $image = $request->file('rutaMeme');
         $file_name = str_replace('.', '-', $request->correoUser);
         $file_name = $memeAgregar->fechaMeme.preg_replace('/[^A-Za-z0-9\-]/', '-', $file_name).".png";
         $image->move(storage_path("app/public/memes"), $file_name);
         $memeAgregar->rutaMeme = $file_name;
-
         //save
         $memeAgregar->save();
+
+        
+        //Agrego Tags
+        if($request->tags != null) {
+            app('App\Http\Controllers\Tag_has_MemeController')->addTags($memeAgregar->getKey(), $request->tags);
+        }
 
         return back()->with('agregar', 'El meme fue subido con exito');
     } 

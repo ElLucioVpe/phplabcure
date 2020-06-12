@@ -39,4 +39,6 @@ Route::get('/suscripciones/{correoUser}','SuscripcionController@suscripcionesUse
 Route::post('/suscribirseTag/{ignora}/{nombreTag}/{correoUser}','SuscripcionController@suscribirseTag')->name('suscribirseTag');
 Route::delete('/eliminarSuscripcion/{correoUser}/{tag}','SuscripcionController@destroy')->name('eliminarSuscripcion');
 
-
+Route::get('/searchTag','TagController@searchTag')->name('searchTag');
+Route::post('/crearTag','TagController@store')->name('storeTag');
+Route::post('/agregarTag','Tag_has_MemeController@store')->name('storeTag_has_Meme');

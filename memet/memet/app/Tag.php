@@ -49,7 +49,7 @@ class Tag extends Model
      */
     public function suscripcions()
     {
-        return $this->hasMany('App\Suscripcion', 'Tag_nombreTag', 'nombreTag');
+        return $this->hasMany('App\Suscripcion', 'Tag_nombreTag');
     }
 
     /**

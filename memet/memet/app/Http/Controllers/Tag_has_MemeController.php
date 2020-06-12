@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tag_has_Meme;
+use App\Tag;
 use Illuminate\Http\Request;
 
 class Tag_has_MemeController extends Controller
@@ -33,17 +34,17 @@ class Tag_has_MemeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($idMeme, $nombreTag)
     {
         $tagMAgregar = new Tag_has_Meme;
-        //
+        /*
         $request->validate(['Tag_nombreTag'=>'required']);
         $request->validate(['Meme_idMeme'=>'required']);
-        //
+        */
 
         $tagMAgregar->timestamps = false;
-        $tagMAgregar->Tag_nombreTag = $request->nombreTag;
-        $tagMAgregar->Meme_idMeme = $request->idMeme;
+        $tagMAgregar->Tag_nombreTag = $nombreTag;
+        $tagMAgregar->Meme_idMeme = $idMeme;
 
         //save
         $tagMAgregar->save();
@@ -94,5 +95,14 @@ class Tag_has_MemeController extends Controller
     public function destroy(Tag_has_Meme $tag_has_Meme)
     {
         //
+    }
+
+    public function addTags($idMeme, $listaTags){
+        foreach($listaTags as $tag) {
+            $tempTag = Tag :: find($tag);
+            if($tempTag == null) app('App\Http\Controllers\TagController')->store($tag);
+            
+            $this->store($idMeme, $tag);
+        }
     }
 }

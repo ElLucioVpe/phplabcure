@@ -33,12 +33,12 @@ class TagController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($nombreTag)
     {
         $tagAgregar = new Tag;
-        $request->validate(['nombreTag'=>'required']);
+        //$request->validate(['nombreTag'=>'required']);
         $tagAgregar->timestamps = false;
-        $tagAgregar->nombreTag = $request->nombreTag;
+        $tagAgregar->nombreTag = $nombreTag;
         $tagAgregar->save();
         return back()->with('agregar','Tag agregado con exito');   
     }
@@ -90,5 +90,30 @@ class TagController extends Controller
         $TagEliminar = Tag :: findOrFail($nombreTag);
         $TagEliminar->delete();
         return back()->with('eliminar','El tag ha sido eliminado con exito');
+    }
+
+    public function searchTag(Request $request){
+        
+        if($request->ajax()) {
+          
+            $data = Tag::where('nombreTag', 'LIKE', $request->nombreTag.'%')->get();
+            $tagEspecifico = Tag :: find($request->nombreTag);
+            $output = '';
+
+            if($request->nombreTag != "") {
+
+                $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
+                if($tagEspecifico == null) $output .= '<li class="list-group-item" data-value="'.$request->nombreTag.'">'.'Crear Tag: '.$request->nombreTag.'</li>';
+                
+                if (count($data)>0) {
+                    foreach ($data as $row){
+                        $output .= '<li class="list-group-item" data-value="'.$row->nombreTag.'">'.$row->nombreTag.'</li>';
+                    }
+                }
+                $output .= '</ul>';
+            }
+                
+            return $output;
+        }
     }
 }
