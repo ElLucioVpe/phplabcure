@@ -13,8 +13,25 @@ class MemeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //-----------------------------
+    {   
+        //Cuando esté iniciado sesion agregar el filtro de tags ignorados
+        //user->suscripcions
+        //
+
+        $memesNEW = Meme::get()->sortBy(function($meme){
+            return $meme->idMeme;
+        })->reverse();
+
+        $memesHOT = Meme::get()->sortBy(function($meme)
+        {
+            $count = 0;
+            foreach($meme->puntuacions as $puntuacion) {
+                if($puntuacion->valorPuntuacion == 1) $count++;
+            }
+            //echo $meme."COUNT: ".$count;
+            return $count;
+        })->reverse();
+        return view('index', compact('memesNEW', 'memesHOT'));
     }
 
     /**
