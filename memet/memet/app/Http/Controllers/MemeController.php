@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Meme;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
 
 class MemeController extends Controller
 {
@@ -14,15 +15,26 @@ class MemeController extends Controller
      */
     public function index()
     {   
-        //Cuando esté iniciado sesion agregar el filtro de tags ignorados
-        //user->suscripcions
+        $memes = Meme::all();
+        //Recomendados
+        $user = 'test@test.com';
+
+        $memesREC = new Collection();
+        if($user != null && $user != "") {
+            $recomendados = app('App\Http\Controllers\SuscripcionController')->getRecomendadosIgnorados($user);
+            $memesREC = $recomendados->seguidos;
+
+            //Filtro de tags ignorados
+            $memesREC = $memesREC->diff($recomendados->ignorados);
+            $memes = $memes->diff($recomendados->ignorados);
+        }
         //
 
-        $memesNEW = Meme::get()->sortBy(function($meme){
+        $memesNEW = $memes->sortBy(function($meme){
             return $meme->idMeme;
         })->reverse();
 
-        $memesHOT = Meme::get()->sortBy(function($meme)
+        $memesHOT = $memes->sortBy(function($meme)
         {
             $count = 0;
             foreach($meme->puntuacions as $puntuacion) {
@@ -31,7 +43,9 @@ class MemeController extends Controller
             //echo $meme."COUNT: ".$count;
             return $count;
         })->reverse();
-        return view('index', compact('memesNEW', 'memesHOT'));
+
+
+        return view('index', compact('memesNEW', 'memesHOT', 'memesREC'));
     }
 
     /**

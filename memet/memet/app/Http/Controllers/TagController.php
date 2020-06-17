@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Collection;
 
 class TagController extends Controller
 {
@@ -115,5 +116,24 @@ class TagController extends Controller
                 
             return $output;
         }
+    }
+
+    public function getRecomendadosIgnorados($tags) {
+        $memes = new \stdClass();
+        $memes->seguidos = new Collection();
+        $memes->ignorados = new Collection();
+
+        if($tags != "" && $tags != null) {
+            foreach($tags->seguidos as $nombreTag) {
+                $temp = Tag :: findOrFail($nombreTag);
+                $memes->seguidos = $memes->seguidos->merge($temp->memes);
+            }
+            foreach($tags->ignorados as $nombreTag) {
+                $temp = Tag :: findOrFail($nombreTag);
+                $memes->ignorados = $memes->ignorados->merge($temp->memes);
+            }
+        }
+
+        return $memes;
     }
 }

@@ -43,13 +43,6 @@ class SuscripcionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
-    public function accionTag() {
-        $tag = Tag :: findOrFail($nombreTag);
-        $user = User :: findOrFail($correoUser);
-
-        
-    }
     public function store($ignora, $nombreTag, $correoUser)
     {
         $suscripcionAgregar = new Suscripcion;
@@ -150,5 +143,22 @@ class SuscripcionController extends Controller
         }
 
         return $operacion;
+    }
+
+    public function getRecomendadosIgnorados($correoUser)
+    {
+        $user = User :: findOrFail($correoUser);
+        $suscripciones = $user->suscripcions;
+        $tags = new \stdClass();
+        $tags->seguidos = array();
+        $tags->ignorados = array();
+
+        foreach($suscripciones as $sus) {
+            if($sus->ignora) $tags->ignorados[] = $sus->Tag_nombreTag;
+            else $tags->seguidos[] = $sus->Tag_nombreTag;
+        }
+        
+        $memes = app('App\Http\Controllers\TagController')->getRecomendadosIgnorados($tags);
+        return $memes;
     }
 }
