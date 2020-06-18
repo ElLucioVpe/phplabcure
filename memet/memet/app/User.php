@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
 
 /**
  * @property string $correoUser
@@ -15,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property Puntuacion[] $puntuacions
  * @property Suscripcion[] $suscripcions
  */
-class User extends Model
+class User extends Authenticatable
 {
     /**
      * The table associated with the model.
@@ -72,5 +74,11 @@ class User extends Model
     public function suscripcions()
     {
         return $this->hasMany('App\Suscripcion', 'User_correoUser', 'correoUser');
+    }
+
+    //Specific Column Password Auth
+    public function getAuthPassword()
+    {
+        return $this->passwordUser;
     }
 }

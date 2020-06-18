@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -42,7 +43,7 @@ class UserController extends Controller
         $userAgregar->timestamps = false;
         $userAgregar->correoUser = $request->correo;
         $userAgregar->nickUser =  $request->nick;
-        $userAgregar->passwordUser =  $request->password;
+        $userAgregar->passwordUser = bcrypt($request->password);
         $userAgregar->tipoUser =  "normy";
         $userAgregar->experienciaUser =  0;
 
@@ -106,7 +107,7 @@ class UserController extends Controller
         $userUpdate = User :: findOrFail($correoUser);
         $userUpdate->timestamps = false;
         $userUpdate->nickUser=$request->nickUser;
-        $userUpdate->passwordUser=$request->passwordUser;
+        $userUpdate->passwordUser=bcrypt($request->passwordUser);
 
 
        if($request->avatar!=null){
@@ -154,5 +155,15 @@ class UserController extends Controller
     {
         $nivel = (int) (floor(25 + sqrt(625 + 100 * $experiencia)) / 50);
         return $nivel;
+    }
+
+    public function loginUser(Request $request){
+        $credentials = $request->only('correoUser', 'password');
+
+        if(Auth::attempt($credentials)){
+            //return redirect()->intended('/PostLogin');
+            dd($credentials->correoUser);
+        }
+            dd("Problemas");
     }
 }

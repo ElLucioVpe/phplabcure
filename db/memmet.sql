@@ -2,10 +2,10 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 02-06-2020 a las 04:02:02
--- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.5
+-- Host: 127.0.0.1
+-- Generation Time: Jun 19, 2020 at 01:48 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.2.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `memmet`
+-- Database: `memmet`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `meme`
+-- Table structure for table `meme`
 --
 
 CREATE TABLE `meme` (
@@ -35,7 +35,7 @@ CREATE TABLE `meme` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `meme`
+-- Dumping data for table `meme`
 --
 
 INSERT INTO `meme` (`idMeme`, `fechaMeme`, `rutaMeme`, `User_correoUser`) VALUES
@@ -44,7 +44,7 @@ INSERT INTO `meme` (`idMeme`, `fechaMeme`, `rutaMeme`, `User_correoUser`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `puntuacion`
+-- Table structure for table `puntuacion`
 --
 
 CREATE TABLE `puntuacion` (
@@ -56,7 +56,7 @@ CREATE TABLE `puntuacion` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `suscripcion`
+-- Table structure for table `suscripcion`
 --
 
 CREATE TABLE `suscripcion` (
@@ -66,7 +66,7 @@ CREATE TABLE `suscripcion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `suscripcion`
+-- Dumping data for table `suscripcion`
 --
 
 INSERT INTO `suscripcion` (`User_correoUser`, `Tag_nombreTag`, `ignora`) VALUES
@@ -75,7 +75,7 @@ INSERT INTO `suscripcion` (`User_correoUser`, `Tag_nombreTag`, `ignora`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tag`
+-- Table structure for table `tag`
 --
 
 CREATE TABLE `tag` (
@@ -83,7 +83,7 @@ CREATE TABLE `tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `tag`
+-- Dumping data for table `tag`
 --
 
 INSERT INTO `tag` (`nombreTag`) VALUES
@@ -93,7 +93,7 @@ INSERT INTO `tag` (`nombreTag`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `tag_has_meme`
+-- Table structure for table `tag_has_meme`
 --
 
 CREATE TABLE `tag_has_meme` (
@@ -104,45 +104,45 @@ CREATE TABLE `tag_has_meme` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE `user` (
   `correoUser` varchar(320) NOT NULL,
   `nickUser` varchar(45) NOT NULL,
-  `passwordUser` varchar(50) DEFAULT NULL,
+  `passwordUser` varchar(200) DEFAULT NULL,
   `tipoUser` varchar(10) DEFAULT NULL,
   `experienciaUser` int(11) DEFAULT 0,
   `avatarUser` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`correoUser`, `nickUser`, `passwordUser`, `tipoUser`, `experienciaUser`, `avatarUser`) VALUES
 ('estebanleivas103@gmail.com', 'esteby', 'lpmconesto', 'Admin', 50, 'ninguno.jpg');
 
 --
--- Índices para tablas volcadas
+-- Indexes for dumped tables
 --
 
 --
--- Indices de la tabla `meme`
+-- Indexes for table `meme`
 --
 ALTER TABLE `meme`
   ADD PRIMARY KEY (`idMeme`),
   ADD KEY `fk_Meme_User_idx` (`User_correoUser`);
 
 --
--- Indices de la tabla `puntuacion`
+-- Indexes for table `puntuacion`
 --
 ALTER TABLE `puntuacion`
   ADD KEY `fk_Puntuacion_User1_idx` (`User_correoUser`),
   ADD KEY `fk_Puntuacion_Meme1_idx` (`Meme_idMeme`);
 
 --
--- Indices de la tabla `suscripcion`
+-- Indexes for table `suscripcion`
 --
 ALTER TABLE `suscripcion`
   ADD PRIMARY KEY (`User_correoUser`,`Tag_nombreTag`),
@@ -150,13 +150,13 @@ ALTER TABLE `suscripcion`
   ADD KEY `fk_Ignorados_Tag1_idx` (`Tag_nombreTag`);
 
 --
--- Indices de la tabla `tag`
+-- Indexes for table `tag`
 --
 ALTER TABLE `tag`
   ADD PRIMARY KEY (`nombreTag`);
 
 --
--- Indices de la tabla `tag_has_meme`
+-- Indexes for table `tag_has_meme`
 --
 ALTER TABLE `tag_has_meme`
   ADD PRIMARY KEY (`Tag_nombreTag`,`Meme_idMeme`),
@@ -164,7 +164,7 @@ ALTER TABLE `tag_has_meme`
   ADD KEY `fk_Tag_has_Meme_Tag1_idx` (`Tag_nombreTag`);
 
 --
--- Indices de la tabla `user`
+-- Indexes for table `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`correoUser`),
@@ -172,41 +172,41 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `correoUser_UNIQUE` (`correoUser`);
 
 --
--- AUTO_INCREMENT de las tablas volcadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de la tabla `meme`
+-- AUTO_INCREMENT for table `meme`
 --
 ALTER TABLE `meme`
   MODIFY `idMeme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Restricciones para tablas volcadas
+-- Constraints for dumped tables
 --
 
 --
--- Filtros para la tabla `meme`
+-- Constraints for table `meme`
 --
 ALTER TABLE `meme`
   ADD CONSTRAINT `fk_Meme_User` FOREIGN KEY (`User_correoUser`) REFERENCES `user` (`correoUser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `puntuacion`
+-- Constraints for table `puntuacion`
 --
 ALTER TABLE `puntuacion`
   ADD CONSTRAINT `fk_Puntuacion_Meme1` FOREIGN KEY (`Meme_idMeme`) REFERENCES `meme` (`idMeme`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Puntuacion_User1` FOREIGN KEY (`User_correoUser`) REFERENCES `user` (`correoUser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `suscripcion`
+-- Constraints for table `suscripcion`
 --
 ALTER TABLE `suscripcion`
   ADD CONSTRAINT `fk_Ignorados_Tag1` FOREIGN KEY (`Tag_nombreTag`) REFERENCES `tag` (`nombreTag`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Ignorados_User1` FOREIGN KEY (`User_correoUser`) REFERENCES `user` (`correoUser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `tag_has_meme`
+-- Constraints for table `tag_has_meme`
 --
 ALTER TABLE `tag_has_meme`
   ADD CONSTRAINT `fk_Tag_has_Meme_Meme1` FOREIGN KEY (`Meme_idMeme`) REFERENCES `meme` (`idMeme`) ON DELETE NO ACTION ON UPDATE NO ACTION,
