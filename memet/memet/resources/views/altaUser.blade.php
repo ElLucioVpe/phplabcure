@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="row">
+<div class="pt-5 row">
       
     <div class="col-md-12">
 
@@ -11,7 +11,7 @@
         <div class="col-md-6">
             <h3 class="text-center mb-4">Crear Cuenta</h3>
 
-            <form action="{{route('store')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('storeUser')}}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <input type="email" name="correo" id="correo" class="form-control" placeholder="Correo Electronico" required>

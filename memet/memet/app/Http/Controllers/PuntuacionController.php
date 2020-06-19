@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Meme;
 use App\Puntuacion;
 use Illuminate\Http\Request;
 
@@ -116,21 +117,28 @@ class PuntuacionController extends Controller
         $puntuacion = Puntuacion ::where('User_correoUser', '=', $correoUser)
         ->where('Meme_idMeme', '=', $meme_id)
         ->first();
-        
+        $meme = Meme::findOrFail($meme_id); //Para poder darle exp al usuario del meme
+        $exp = 0;
+
         $operacion = ["", $valor];
 
         if($puntuacion == null) { 
             $this->store($correoUser, $meme_id, $valor);
+            if($valor == 1) $exp = 5;
             $operacion[0] = "store";
         } else if($puntuacion->valorPuntuacion != $valor) {
             $this->update($correoUser, $meme_id);
+            if($valor == 1) $exp = 5;
+            else $exp = -5;
             $operacion[0] = "update";
         } else {
             $this->destroy($correoUser, $meme_id);
+            if($valor == 1) $exp = -5;
             $operacion[0] = "destroy";
         }
 
+        app('App\Http\Controllers\UserController')->gainEXP($meme->User_correoUser, $exp);
+
         return $operacion;
-        
     }
 }

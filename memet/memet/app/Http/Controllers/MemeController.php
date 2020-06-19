@@ -17,7 +17,7 @@ class MemeController extends Controller
     {   
         $memes = Meme::all();
         //Recomendados
-        $user = 'test@test.com';
+        $user = 'estebanleivas103@gmail.com';
 
         $memesREC = new Collection();
         if($user != null && $user != "") {
@@ -71,6 +71,7 @@ class MemeController extends Controller
         $request->validate(['tituloMeme'=>'required']);
         $request->validate(['rutaMeme'=>'required']);
         $request->validate(['rutaMeme'=>'image|mimes:jpeg,png,jpg|max:2048']);
+        $request->validate(['correoUser'=>'required']);
         //$request->validate(['tags'=>'required']);
         //
 
@@ -94,6 +95,9 @@ class MemeController extends Controller
             app('App\Http\Controllers\Tag_has_MemeController')->addTags($memeAgregar->getKey(), $request->tags);
         }
 
+        //Gana experiencia
+        app('App\Http\Controllers\UserController')->gainEXP($memeAgregar->User_correoUser, 50);
+
         return back()->with('agregar', 'El meme fue subido con exito');
     } 
 
@@ -108,8 +112,7 @@ class MemeController extends Controller
         $memeMostrar = Meme :: findOrFail($idMeme);
         $puntuaciones = [0,0];
 
-        $memeMostrar->fechaMeme = preg_replace('/-/', '/', $memeMostrar->fechaMeme, 2);
-        $memeMostrar->fechaMeme = preg_replace('/-/', ':', $memeMostrar->fechaMeme, 2);
+        $memeMostrar->fechaMeme = preg_replace('/-/', '/', $memeMostrar->fechaMeme);
 
         foreach($memeMostrar->puntuacions as $pun) {
             if($pun->valorPuntuacion) $puntuaciones[0]++;

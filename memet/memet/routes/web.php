@@ -20,7 +20,11 @@ Route::get('/','MemeController@index')->name('index');
 Route::get('/registro', function () {
     return view('altaUser');
 });
-Route::post('/crearCuenta','UserController@store')->name('store');
+Route::post('/registro','UserController@store')->name('storeUser');
+Route::get('/login', function () {
+    return view('login');
+});
+Route::post('/login','UserController@loginUser')->name('login');
 
 Route::get('/perfilUser/{correoUser}','UserController@show')->name('perfilUser');
 Route::get('/editarUser/{correoUser}','UserController@editar')->name('editarUser');

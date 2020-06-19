@@ -166,4 +166,11 @@ class UserController extends Controller
         }
             dd("Problemas");
     }
+
+    public function gainEXP($correoUser, $exp){
+        $user = User::findOrFail($correoUser);
+        $user->timestamps = false;
+        $user->experienciaUser += $exp;
+        $user->save();
+    }
 }

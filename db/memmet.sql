@@ -2,10 +2,10 @@
 -- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 19, 2020 at 01:48 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.2.30
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 20-06-2020 a las 00:03:57
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,33 +18,36 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `memmet`
+-- Base de datos: `memmet`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `meme`
+-- Estructura de tabla para la tabla `meme`
 --
 
 CREATE TABLE `meme` (
   `idMeme` int(11) NOT NULL,
-  `fechaMeme` varchar(45) DEFAULT NULL,
+  `tituloMeme` varchar(300) NOT NULL,
+  `fechaMeme` datetime DEFAULT NULL,
   `rutaMeme` varchar(500) DEFAULT NULL,
   `User_correoUser` varchar(320) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `meme`
+-- Volcado de datos para la tabla `meme`
 --
 
-INSERT INTO `meme` (`idMeme`, `fechaMeme`, `rutaMeme`, `User_correoUser`) VALUES
-(1, '2020-05-22 04-56-44', '2020-05-22 04-56-44estebanleivas103-gmail-com.png', 'estebanleivas103@gmail.com');
+INSERT INTO `meme` (`idMeme`, `tituloMeme`, `fechaMeme`, `rutaMeme`, `User_correoUser`) VALUES
+(1, '', '2020-05-22 00:00:00', '2020-05-22 04-56-44estebanleivas103-gmail-com.png', 'estebanleivas103@gmail.com'),
+(3, 'MemeTest1', '2020-06-19 21:58:38', '2020-06-19 21-58-38test-test-com.png', 'test@test.com'),
+(4, 'MemeTest1', '2020-06-19 21:59:24', '2020-06-19 21-59-24test-test-com.png', 'test@test.com');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `puntuacion`
+-- Estructura de tabla para la tabla `puntuacion`
 --
 
 CREATE TABLE `puntuacion` (
@@ -53,10 +56,17 @@ CREATE TABLE `puntuacion` (
   `valorPuntuacion` tinyint(4) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `puntuacion`
+--
+
+INSERT INTO `puntuacion` (`User_correoUser`, `Meme_idMeme`, `valorPuntuacion`) VALUES
+('test@test.com', 3, 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `suscripcion`
+-- Estructura de tabla para la tabla `suscripcion`
 --
 
 CREATE TABLE `suscripcion` (
@@ -66,7 +76,7 @@ CREATE TABLE `suscripcion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `suscripcion`
+-- Volcado de datos para la tabla `suscripcion`
 --
 
 INSERT INTO `suscripcion` (`User_correoUser`, `Tag_nombreTag`, `ignora`) VALUES
@@ -75,7 +85,7 @@ INSERT INTO `suscripcion` (`User_correoUser`, `Tag_nombreTag`, `ignora`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tag`
+-- Estructura de tabla para la tabla `tag`
 --
 
 CREATE TABLE `tag` (
@@ -83,17 +93,18 @@ CREATE TABLE `tag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `tag`
+-- Volcado de datos para la tabla `tag`
 --
 
 INSERT INTO `tag` (`nombreTag`) VALUES
+('tag_Creado2'),
 ('tas loco estos varchar son re locos no se que escribir para llenar este tag pero bueno hay que usar bien lo que tenemos, aprovechar, me entendes.'),
 ('videojuegos');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tag_has_meme`
+-- Estructura de tabla para la tabla `tag_has_meme`
 --
 
 CREATE TABLE `tag_has_meme` (
@@ -101,10 +112,20 @@ CREATE TABLE `tag_has_meme` (
   `Meme_idMeme` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `tag_has_meme`
+--
+
+INSERT INTO `tag_has_meme` (`Tag_nombreTag`, `Meme_idMeme`) VALUES
+('tag_Creado2', 3),
+('tag_Creado2', 4),
+('tas loco estos varchar son re locos no se que escribir para llenar este tag pero bueno hay que usar bien lo que tenemos, aprovechar, me entendes.', 3),
+('tas loco estos varchar son re locos no se que escribir para llenar este tag pero bueno hay que usar bien lo que tenemos, aprovechar, me entendes.', 4);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Estructura de tabla para la tabla `user`
 --
 
 CREATE TABLE `user` (
@@ -117,32 +138,35 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `user`
+-- Volcado de datos para la tabla `user`
 --
 
 INSERT INTO `user` (`correoUser`, `nickUser`, `passwordUser`, `tipoUser`, `experienciaUser`, `avatarUser`) VALUES
-('estebanleivas103@gmail.com', 'esteby', 'lpmconesto', 'Admin', 50, 'ninguno.jpg');
+('estebanleivas103@gmail.com', 'esteby', 'lpmconesto', 'Admin', 50, 'ninguno.jpg'),
+('test2@test.com', 'Testeador2', '$2y$10$KnI4d95Qa7RoQ2zWraVS7Ot/j/pgRINJRakwUlyIruoDr8bZMG73K', 'normy', 0, 'gualby.png'),
+('test3@test.com', 'Testeador3', '$2y$10$2jpL4GCX.kC9nM7VNSQR7.lDacULcRcNsWRSOPc9HV11odEEiPKbu', 'normy', 0, 'gualby.png'),
+('test@test.com', 'Testeador', '$2y$10$pChfwl6l3Kd3HjSQaEwkE.MRN.Kda2.pwoTdATD0tCPmWmERkrkDe', 'normy', 55, 'test@test.com.png');
 
 --
--- Indexes for dumped tables
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `meme`
+-- Indices de la tabla `meme`
 --
 ALTER TABLE `meme`
   ADD PRIMARY KEY (`idMeme`),
   ADD KEY `fk_Meme_User_idx` (`User_correoUser`);
 
 --
--- Indexes for table `puntuacion`
+-- Indices de la tabla `puntuacion`
 --
 ALTER TABLE `puntuacion`
   ADD KEY `fk_Puntuacion_User1_idx` (`User_correoUser`),
   ADD KEY `fk_Puntuacion_Meme1_idx` (`Meme_idMeme`);
 
 --
--- Indexes for table `suscripcion`
+-- Indices de la tabla `suscripcion`
 --
 ALTER TABLE `suscripcion`
   ADD PRIMARY KEY (`User_correoUser`,`Tag_nombreTag`),
@@ -150,13 +174,13 @@ ALTER TABLE `suscripcion`
   ADD KEY `fk_Ignorados_Tag1_idx` (`Tag_nombreTag`);
 
 --
--- Indexes for table `tag`
+-- Indices de la tabla `tag`
 --
 ALTER TABLE `tag`
   ADD PRIMARY KEY (`nombreTag`);
 
 --
--- Indexes for table `tag_has_meme`
+-- Indices de la tabla `tag_has_meme`
 --
 ALTER TABLE `tag_has_meme`
   ADD PRIMARY KEY (`Tag_nombreTag`,`Meme_idMeme`),
@@ -164,7 +188,7 @@ ALTER TABLE `tag_has_meme`
   ADD KEY `fk_Tag_has_Meme_Tag1_idx` (`Tag_nombreTag`);
 
 --
--- Indexes for table `user`
+-- Indices de la tabla `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`correoUser`),
@@ -172,41 +196,41 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `correoUser_UNIQUE` (`correoUser`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `meme`
+-- AUTO_INCREMENT de la tabla `meme`
 --
 ALTER TABLE `meme`
-  MODIFY `idMeme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idMeme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `meme`
+-- Filtros para la tabla `meme`
 --
 ALTER TABLE `meme`
   ADD CONSTRAINT `fk_Meme_User` FOREIGN KEY (`User_correoUser`) REFERENCES `user` (`correoUser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `puntuacion`
+-- Filtros para la tabla `puntuacion`
 --
 ALTER TABLE `puntuacion`
   ADD CONSTRAINT `fk_Puntuacion_Meme1` FOREIGN KEY (`Meme_idMeme`) REFERENCES `meme` (`idMeme`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Puntuacion_User1` FOREIGN KEY (`User_correoUser`) REFERENCES `user` (`correoUser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `suscripcion`
+-- Filtros para la tabla `suscripcion`
 --
 ALTER TABLE `suscripcion`
   ADD CONSTRAINT `fk_Ignorados_Tag1` FOREIGN KEY (`Tag_nombreTag`) REFERENCES `tag` (`nombreTag`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Ignorados_User1` FOREIGN KEY (`User_correoUser`) REFERENCES `user` (`correoUser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `tag_has_meme`
+-- Filtros para la tabla `tag_has_meme`
 --
 ALTER TABLE `tag_has_meme`
   ADD CONSTRAINT `fk_Tag_has_Meme_Meme1` FOREIGN KEY (`Meme_idMeme`) REFERENCES `meme` (`idMeme`) ON DELETE NO ACTION ON UPDATE NO ACTION,
