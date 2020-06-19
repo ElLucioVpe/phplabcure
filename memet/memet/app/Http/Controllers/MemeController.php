@@ -31,7 +31,7 @@ class MemeController extends Controller
         //
 
         $memesNEW = $memes->sortBy(function($meme){
-            return $meme->idMeme;
+            return $meme->fechaMeme;
         })->reverse();
 
         $memesHOT = $memes->sortBy(function($meme)
@@ -40,7 +40,6 @@ class MemeController extends Controller
             foreach($meme->puntuacions as $puntuacion) {
                 if($puntuacion->valorPuntuacion == 1) $count++;
             }
-            //echo $meme."COUNT: ".$count;
             return $count;
         })->reverse();
 
