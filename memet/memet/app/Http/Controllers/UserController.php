@@ -162,7 +162,7 @@ class UserController extends Controller
 
         if(Auth::attempt($credentials)){
             //return redirect()->intended('/PostLogin');
-            dd($credentials->correoUser);
+            dd($credentials['correoUser']);
         }
             dd("Problemas");
     }
