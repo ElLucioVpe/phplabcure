@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * @property string $correoUser
+ * @property string $nickUser
  * @property int $experienciaUser
  * @property string $passwordUser
  * @property string $tipoUser

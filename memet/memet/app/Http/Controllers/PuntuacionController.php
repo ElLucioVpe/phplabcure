@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Meme;
 use App\Puntuacion;
 use Illuminate\Http\Request;

@@ -25,6 +25,7 @@ Route::get('/login', function () {
     return view('login');
 });
 Route::post('/login','UserController@loginUser')->name('login');
+Route::post('/logout','UserController@logoutUser')->name('logout');
 
 Route::get('/perfilUser/{correoUser}','UserController@show')->name('perfilUser');
 Route::get('/editarUser/{correoUser}','UserController@editar')->name('editarUser');

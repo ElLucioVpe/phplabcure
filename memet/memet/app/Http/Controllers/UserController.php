@@ -160,11 +160,12 @@ class UserController extends Controller
     public function loginUser(Request $request){
         $credentials = $request->only('correoUser', 'password');
 
-        if(Auth::attempt($credentials)){
-            //return redirect()->intended('/PostLogin');
-            dd($credentials['correoUser']);
-        }
-            dd("Problemas");
+        if(Auth::attempt($credentials)) return redirect()->route('index');
+        else return redirect()->route('login');
+    }
+
+    public function logoutUser(){
+        Auth::logout();
     }
 
     public function gainEXP($correoUser, $exp){

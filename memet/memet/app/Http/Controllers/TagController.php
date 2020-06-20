@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;

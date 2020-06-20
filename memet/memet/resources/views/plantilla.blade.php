@@ -19,6 +19,14 @@
     <title>MEMET</title>
   </head>
   <body>
+    <!-- Header de ajax en la plantilla para no repetir codigo -->
+    <script>
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+    </script>
 
     <!-- El yield aca cambia el content -->
     <x-header/>

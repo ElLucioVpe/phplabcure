@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Meme;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Collection;
@@ -17,11 +18,9 @@ class MemeController extends Controller
     {   
         $memes = Meme::all();
         //Recomendados
-        $user = 'estebanleivas103@gmail.com';
-
         $memesREC = new Collection();
-        if($user != null && $user != "") {
-            $recomendados = app('App\Http\Controllers\SuscripcionController')->getRecomendadosIgnorados($user);
+        if($user = Auth::user()) {
+            $recomendados = app('App\Http\Controllers\SuscripcionController')->getRecomendadosIgnorados($user->correoUser);
             $memesREC = $recomendados->seguidos;
 
             //Filtro de tags ignorados

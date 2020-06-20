@@ -4,6 +4,14 @@
 
     <div class="info-meme">
         <div class="modal-content w-75 mx-auto mt-3">
+            <div id="user-link" class="modal-header">
+                <div class="form-inline">
+                    <small>Subido por:&nbsp</small>
+                    <a href="{{url('perfilUser').'/'.$memeMostrar->user->correoUser}}" style="color:black;">
+                        {{$memeMostrar->user->nickUser}}
+                    </a>
+                </div>
+            </div>
             <div class="modal-header">
                 <h5 class="modal-title">{{$memeMostrar->tituloMeme}}</h5>
                 <p class="media-heading">
@@ -72,45 +80,45 @@
         </div>
     </div>
 
+    @if($user = Auth::user())
+        <script type="text/javascript"> var user = '{{$user->correoUser}}'; </script>
+    @else 
+        <script type="text/javascript"> var user = "none"; </script>
+    @endif
+
     <script type="text/javascript">
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
         function puntuarMeme(value) {
-            //test
-            var user = 'test@test.com';
             var meme = {{$memeMostrar->idMeme}};
+            console.log(user);
+            if(user != "none") {
+                $.ajax({ 
+                    type:'POST',
+                    url:"{{url('/puntuarMeme')}}"+'/'+user+'/'+meme+'/'+value,
+                    success:function(data){
+                        console.log(data);
+                        var span = "like-span";
+                        var anti_span = "dislike-span";
+                        if(data[1] == 0) {
+                            span = "dislike-span";
+                            anti_span = "like-span";
+                        }
 
-            $.ajax({ 
-                type:'POST',
-                url:"{{url('/puntuarMeme')}}"+'/'+user+'/'+meme+'/'+value,
-                success:function(data){
-                    console.log(data);
-                    var span = "like-span";
-                    var anti_span = "dislike-span";
-                    if(data[1] == 0) {
-                        span = "dislike-span";
-                        anti_span = "like-span";
+                        if(data[0] == "store") 
+                            document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)+1;
+                        else if(data[0] == "destroy")
+                            document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)-1;
+                        else if(data[0] == "update") {
+                            document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)+1;
+                            document.getElementById(anti_span).textContent = parseInt(document.getElementById(anti_span).innerText)-1;
+                        }
+                        
+                    },
+                    error:function() {
+                        console.log("Sucedio un error en la puntuacion");
                     }
-
-                    if(data[0] == "store") 
-                        document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)+1;
-                    else if(data[0] == "destroy")
-                        document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)-1;
-                    else if(data[0] == "update") {
-                        document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)+1;
-                        document.getElementById(anti_span).textContent = parseInt(document.getElementById(anti_span).innerText)-1;
-                    }
-                    
-                },
-                error:function() {
-                    console.log("Sucedio un error en la puntuacion");
-                }
-            });
+                });
+            } else alert("Inicie Sesion");
         }
 
         function mostrarVentanaTag(tag) {
@@ -120,25 +128,27 @@
 
         function accionTag(ignora) {
             var tag = $('#tagActionsLabel').html();
-            var user = 'test@test.com'; //Test
 
-            $.ajax({ 
-                type:'POST',
-                url:"{{url('/suscribirseTag')}}"+'/'+ignora+'/'+tag+'/'+user,
-                success:function(data){
-                    if(data == "store" || data == "update") {
-                        if(!ignora) alert("Usted se ha suscripto al tag con exito");
-                        else alert("Usted ha ignorado el tag con exito");
-                    } else if(data == "destroy") {
-                        if(!ignora) alert("Usted ya estaba suscripto al tag, por lo tanto ha dejado de estarlo");
-                        else alert("Usted ya habia ignorado el tag, por lo tanto ha dejado de hacerlo");
+            if(user != "none") {
+                $.ajax({ 
+                    type:'POST',
+                    url:"{{url('/suscribirseTag')}}"+'/'+ignora+'/'+tag+'/'+user,
+                    success:function(data){
+                        if(data == "store" || data == "update") {
+                            if(!ignora) alert("Usted se ha suscripto al tag con exito");
+                            else alert("Usted ha ignorado el tag con exito");
+                        } else if(data == "destroy") {
+                            if(!ignora) alert("Usted ya estaba suscripto al tag, por lo tanto ha dejado de estarlo");
+                            else alert("Usted ya habia ignorado el tag, por lo tanto ha dejado de hacerlo");
+                        }
+                    },
+                    error:function(){
+                        alert("Sucedio un error en la operación\nInicie Sesion si no lo ha hecho");
                     }
-                },
-                error:function(){
-                    alert("Sucedio un error en la operación\nInicie Sesion si no lo ha hecho");
-                }
-            });
+                });
+            } else alert("Inicie Sesion");
         }
 
     </script>
+
 @endsection

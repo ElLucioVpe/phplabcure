@@ -2,6 +2,12 @@
 
 @section('content')
 
+@if(Auth::guest())
+    <script type="text/javascript">
+        window.location = "{{ url('/login') }}";
+    </script>
+@elseif($user = Auth::user())
+
 <div class="row mt-3">
     <div class="col-md-12">
 
@@ -47,9 +53,9 @@
                         <div id="tag_list"></div>                    
                     </div>
                 </div>
-
-                <input type="hidden" name="correoUser" id="correoUser" value="test@test.com">
-
+                
+                <input type="hidden" name="correoUser" id="correoUser" value="{{$user->correoUser}}">
+                    
                 <button type="submit" class="btn btn-success btn-block">Subir</button>
             </form>
 
@@ -133,5 +139,5 @@
     </div>
    
 </div>
-
+@endif
 @endsection
