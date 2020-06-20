@@ -44,12 +44,10 @@ class UserController extends Controller
         $userAgregar->correoUser = $request->correo;
         $userAgregar->nickUser =  $request->nick;
         $userAgregar->passwordUser = bcrypt($request->password);
-        $userAgregar->tipoUser =  "normy";
+        $userAgregar->tipoUser =  "Usuario";
         $userAgregar->experienciaUser =  0;
 
-        $UserAvatar ="gualby.png";
-        
-        
+        $UserAvatar ="ninguno.png";
 
         if($request->avatar!=null){
             $request->validate(['avatar'=>'image|mimes:jpeg,png,jpg|max:2048']);
@@ -59,14 +57,15 @@ class UserController extends Controller
 
             $userAgregar->avatarUser =  $request->correo.'.png';
         }else{
-            $userAgregar->avatarUser =  $UserAvatar;
+            $userAgregar->avatarUser = $UserAvatar;
         }
 
         //Hacemos save en bd
         $userAgregar->save();
 
         //Aca podriamos retornar al index logeado o al login
-        return back()->with('agregar','Cuenta creada con exito'); 
+        Auth::login($userAgregar);
+        return redirect()->route('index');
     }
 
     /**
