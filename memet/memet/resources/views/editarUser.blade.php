@@ -6,7 +6,7 @@
 
  @if($user->correoUser == $userActualizar->correoUser)
 
-    <h3 class="text-center mb-3 pt-3">Editar Tu Perfil {{$userActualizar->correoUser}}</h3>
+    <h3 class="text-center mb-3 pt-3">Edita Tu Perfil {{$userActualizar->nickUser}}</h3>
 
         <form action="{{route('updateUser', $userActualizar->correoUser)}}" method="POST" enctype="multipart/form-data">
             @method('PUT')
@@ -19,7 +19,7 @@
             </div>
             <div>
                 <center>
-                <img src="{{ url('/') }}/profileImages/{{$userActualizar->avatarUser}}" height="400" width=auto>
+                    <img src="{{ url('storage/avatar/'.$userActualizar->avatarUser) }}" height="150" width=auto>
                 </center>
             </div>
             <div class="form-group">
@@ -45,12 +45,12 @@
 
  @else
     <script type="text/javascript">
-        window.location = "{{ url('/index') }}";
+        window.location = "{{ route('index') }}";
     </script>
  @endif
 @else
     <script type="text/javascript">
-        window.location = "{{ url('/index') }}";
+        window.location = "{{ route('index') }}";
     </script>
 @endif
 @endsection

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravelista\Comments\Commentable;
 
 /**
  * @property int $idMeme
@@ -16,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Meme extends Model
 {
+    use Commentable;
     /**
      * The table associated with the model.
      * 

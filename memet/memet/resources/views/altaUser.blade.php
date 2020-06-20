@@ -18,7 +18,7 @@
                 </div>
                 @error('correo')
                     <div class="alert alert-danger">
-                        El correo Ya esta utilizado
+                        El correo ya esta utilizado
                     </div>
                 @enderror
                 <div class="form-group">

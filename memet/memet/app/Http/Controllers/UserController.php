@@ -53,7 +53,7 @@ class UserController extends Controller
             $request->validate(['avatar'=>'image|mimes:jpeg,png,jpg|max:2048']);
             $image = $request->file('avatar');
             $new_name = $request->correo.'.png';
-            $image->move(public_path("profileImages"),$new_name);
+            $image->move(storage_path('app/public/avatar'),$new_name);
 
             $userAgregar->avatarUser =  $request->correo.'.png';
         }else{
@@ -78,8 +78,8 @@ class UserController extends Controller
     {
         $userMostrar = User::findOrFail($correoUser);
         $nivelUser = $this->nivelUsuario($userMostrar->experienciaUser);
-        $rutaAvatar = public_path('avatar');
-        return view('perfilUser',compact('userMostrar', 'nivelUser', 'rutaAvatar'));
+        //$rutaAvatar = public_path('storage/avatar');
+        return view('perfilUser',compact('userMostrar', 'nivelUser'));
     }
 
     /**
@@ -91,7 +91,8 @@ class UserController extends Controller
     public function edit($correoUser)
     {
         $userActualizar = User::findOrFail($correoUser);
-        return view('editarUser',compact('userActualizar'));
+        $rutaAvatar = public_path('storage/avatar');
+        return view('editarUser',compact('userActualizar', 'rutaAvatar'));
     }
 
     /**
@@ -113,12 +114,12 @@ class UserController extends Controller
             $request->validate(['avatar'=>'image|mimes:jpeg,png,jpg|max:2048']);
             $image = $request->file('avatar');
             $new_name = $correoUser.'.png';
-            $image->move(public_path("profileImages"),$new_name); 
+            $image->move(storage_path('app/public/avatar'),$new_name); 
 
             
-        if($userUpdate->avatarUser == "gualby.png"){
-            $userUpdate->avatarUser= $correoUser.'.png';
-        }
+            if($userUpdate->avatarUser == "ninguno.png"){
+                $userUpdate->avatarUser= $correoUser.'.png';
+            }
 
         }
 
@@ -147,7 +148,7 @@ class UserController extends Controller
         }
 
         $userEliminar->delete();
-        return back()->with('index','User eliminado con exito');
+        return redirect()->route('index');
     }
 
     public function nivelUsuario($experiencia)

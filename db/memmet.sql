@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2020 a las 00:03:57
+-- Tiempo de generación: 21-06-2020 a las 01:25:45
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.5
 
@@ -40,9 +40,9 @@ CREATE TABLE `meme` (
 --
 
 INSERT INTO `meme` (`idMeme`, `tituloMeme`, `fechaMeme`, `rutaMeme`, `User_correoUser`) VALUES
-(1, '', '2020-05-22 00:00:00', '2020-05-22 04-56-44estebanleivas103-gmail-com.png', 'estebanleivas103@gmail.com'),
+(1, 'Jojo', '2020-05-22 00:00:00', '2020-05-22 04-56-44estebanleivas103-gmail-com.png', 'estebanleivas103@gmail.com'),
 (3, 'MemeTest1', '2020-06-19 21:58:38', '2020-06-19 21-58-38test-test-com.png', 'test@test.com'),
-(4, 'MemeTest1', '2020-06-19 21:59:24', '2020-06-19 21-59-24test-test-com.png', 'test@test.com');
+(4, 'MemeTest2', '2020-06-19 21:59:24', '2020-06-19 21-59-24test-test-com.png', 'test@test.com');
 
 -- --------------------------------------------------------
 
@@ -61,7 +61,10 @@ CREATE TABLE `puntuacion` (
 --
 
 INSERT INTO `puntuacion` (`User_correoUser`, `Meme_idMeme`, `valorPuntuacion`) VALUES
-('test@test.com', 3, 1);
+('test@test.com', 3, 1),
+('test@test.com', 1, 1),
+('test@test.com', 4, 1),
+('test2@test.com', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -80,7 +83,8 @@ CREATE TABLE `suscripcion` (
 --
 
 INSERT INTO `suscripcion` (`User_correoUser`, `Tag_nombreTag`, `ignora`) VALUES
-('estebanleivas103@gmail.com', 'videojuegos', 0);
+('estebanleivas103@gmail.com', 'videojuegos', 0),
+('test2@test.com', 'tas loco estos varchar son re locos no se que escribir para llenar este tag pero bueno hay que usar bien lo que tenemos, aprovechar, me entendes.', 0);
 
 -- --------------------------------------------------------
 
@@ -99,7 +103,8 @@ CREATE TABLE `tag` (
 INSERT INTO `tag` (`nombreTag`) VALUES
 ('tag_Creado2'),
 ('tas loco estos varchar son re locos no se que escribir para llenar este tag pero bueno hay que usar bien lo que tenemos, aprovechar, me entendes.'),
-('videojuegos');
+('videojuegos'),
+('warframe');
 
 -- --------------------------------------------------------
 
@@ -142,10 +147,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`correoUser`, `nickUser`, `passwordUser`, `tipoUser`, `experienciaUser`, `avatarUser`) VALUES
-('estebanleivas103@gmail.com', 'esteby', 'lpmconesto', 'Admin', 50, 'ninguno.jpg'),
-('test2@test.com', 'Testeador2', '$2y$10$KnI4d95Qa7RoQ2zWraVS7Ot/j/pgRINJRakwUlyIruoDr8bZMG73K', 'normy', 0, 'gualby.png'),
-('test3@test.com', 'Testeador3', '$2y$10$2jpL4GCX.kC9nM7VNSQR7.lDacULcRcNsWRSOPc9HV11odEEiPKbu', 'normy', 0, 'gualby.png'),
-('test@test.com', 'Testeador', '$2y$10$pChfwl6l3Kd3HjSQaEwkE.MRN.Kda2.pwoTdATD0tCPmWmERkrkDe', 'normy', 55, 'test@test.com.png');
+('estebanleivas103@gmail.com', 'esteby', 'lpmconesto', 'Admin', 55, 'ninguno.png'),
+('estonoesuntest@notest.com', 'No testeador', '$2y$10$M8j4ONwWkAE5CZtw9zYlvOahqckkCNyGQQGtepYTCLic9ZeoTFKy6', 'Usuario', 0, 'estonoesuntest@notest.com.png'),
+('test2@test.com', 'Testeador2', '$2y$10$Qtc92r61ju9I2A0xDzWiB.411Jk5VhdHgiIe2fHj0yXrZkl0ILveW', 'normy', 0, 'ninguno.png'),
+('test3@test.com', 'Testeador3', '$2y$10$2jpL4GCX.kC9nM7VNSQR7.lDacULcRcNsWRSOPc9HV11odEEiPKbu', 'normy', 0, 'ninguno.png'),
+('test@test.com', 'Testeador', '$2y$10$WKH9KDkRItQCM4GeKyy1Z.reyxjb60xuGp0yPtvhmggkqE371p0Wy', 'normy', 65, 'test@test.com.png');
 
 --
 -- Índices para tablas volcadas
@@ -203,7 +209,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT de la tabla `meme`
 --
 ALTER TABLE `meme`
-  MODIFY `idMeme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idMeme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

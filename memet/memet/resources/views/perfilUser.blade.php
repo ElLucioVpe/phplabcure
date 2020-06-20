@@ -4,7 +4,13 @@
     <div class="perfil">
             <div class="modal-content w-75 mx-auto mt-3">
                 <div class="modal-header mx-auto">
-                    <h4 class="modal-title">Perfil de {{$userMostrar->nickUser}}</h4>
+                    <h4 class="modal-title">Perfil de {{$userMostrar->nickUser}}
+                        @if($user = Auth::user())
+                            @if($user->correoUser == $userMostrar->correoUser)
+                            <a href="{{route('editarUser', ['correoUser' => $userMostrar->correoUser])}}"><i class="fa fa-edit"></i></a>
+                            @endif
+                        @endif
+                    </h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-inline">

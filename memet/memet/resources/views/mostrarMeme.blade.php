@@ -77,6 +77,12 @@
                     </h5>
                 </div>
             </div>
+            <div id="comments">
+                @comments([
+                    'model' => $memeMostrar,
+                    'perPage' => 50
+                ])
+            </div>
         </div>
     </div>
 
