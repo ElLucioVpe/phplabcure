@@ -78,8 +78,14 @@ class UserController extends Controller
     {
         $userMostrar = User::findOrFail($correoUser);
         $nivelUser = $this->nivelUsuario($userMostrar->experienciaUser);
-        //$rutaAvatar = public_path('storage/avatar');
-        return view('perfilUser',compact('userMostrar', 'nivelUser'));
+
+        //Recompensas
+        $recompensas = new \stdClass;
+        $recompensas->titulo = $this->getRecompensa($userMostrar->recompensas, 'Titulo');
+        $recompensas->medallas = $this->getRecompensa($userMostrar->recompensas, 'Medalla');
+        //
+
+        return view('perfilUser',compact('userMostrar', 'nivelUser', 'recompensas'));
     }
 
     /**
@@ -168,10 +174,44 @@ class UserController extends Controller
         Auth::logout();
     }
 
-    public function gainEXP($correoUser, $exp){
+    public function gainEXP($correoUser, $exp) {
         $user = User::findOrFail($correoUser);
         $user->timestamps = false;
+
+        $nivelAnterior = $this->nivelUsuario($user->experienciaUser);
         $user->experienciaUser += $exp;
+        $nuevoNivel = $this->nivelUsuario($user->experienciaUser);
+
+        if($nuevoNivel > $nivelAnterior) {
+            app('App\Http\Controllers\RecompensaController')->darRecompensa($correoUser, $nuevoNivel);
+        }
+
         $user->save();
+    }
+
+    public function getRecompensa($recompensas, $tipoReward) {
+        $nivelReward = 0;
+        $retorno = "";
+        
+        //tipoReward existe para poder hacer distintas acciones segun el tipo
+        //Por ejemplo, el titulo queremos obtener solamente el de mayor nivel
+
+        if($tipoReward == "Medalla") $retorno = array();
+
+        foreach($recompensas as $recom) {
+            if($recom->tipo == $tipoReward) {
+                if($tipoReward == "Titulo") {
+                    if($recom->nivel > $nivelReward) {
+                        $nivelReward = $recom->nivel;
+                        $retorno = $recom->contenido;
+                    }
+                }
+                if($tipoReward == "Medalla") {
+                    $retorno[] = $recom->contenido;
+                }
+            }
+        }
+
+        return $retorno;
     }
 }

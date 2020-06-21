@@ -19,8 +19,22 @@
                         </div>
                         <div class="datos-user">
                             <h3 class="media-heading">{{$userMostrar->nickUser}}
+                                @if($recompensas->titulo != "")
+                                    <small>[{{$recompensas->titulo}}]</small>
+                                @endif
                                 <small><span class="badge badge-info">Nivel {{$nivelUser}}</span></small>
                             </h3>
+                            
+                            @if(!empty($recompensas->medallas))
+                                <h5>
+                                    @foreach($recompensas->medallas as $medalla)
+                                        <!-- Las medallas se guardan como html para poder ser mas personalizadas -->
+                                        {!! $medalla !!}
+                                    @endforeach
+                                </h5>
+                                <hr/>
+                            @endif
+
                             <h5>
                                 @if($userMostrar->memes->count() == 1)
                                     <span class="badge badge-success">{{$userMostrar->memes->count()}} Publicacion</span>

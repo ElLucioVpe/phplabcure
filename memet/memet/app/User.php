@@ -79,6 +79,14 @@ class User extends Authenticatable
         return $this->hasMany('App\Suscripcion', 'User_correoUser', 'correoUser');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function recompensas()
+    {
+        return $this->belongsToMany('App\Recompensa', 'user_has_recompensas', 'correoUser', 'idRecompensa');
+    }
+
     //Specific Column Password Auth
     public function getAuthPassword()
     {

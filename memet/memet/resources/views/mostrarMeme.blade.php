@@ -7,8 +7,8 @@
             <div id="user-link" class="modal-header">
                 <div class="form-inline">
                     <small>Subido por:&nbsp</small>
-                    <a href="{{url('perfilUser').'/'.$memeMostrar->user->correoUser}}" style="color:black;">
-                        {{$memeMostrar->user->nickUser}}
+                    <a href="{{url('perfilUser').'/'.($memeMostrar->user->correoUser ?? 'eliminado')}}" style="color:black;">
+                        {{$memeMostrar->user->nickUser ?? 'usuario eliminado'}}
                     </a>
                 </div>
             </div>

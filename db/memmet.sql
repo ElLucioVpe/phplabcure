@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2020 a las 01:25:45
+-- Tiempo de generación: 21-06-2020 a las 05:41:18
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.5
 
@@ -20,6 +20,35 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `memmet`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `commenter_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `commenter_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `guest_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `guest_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `commentable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `commentable_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `approved` tinyint(1) NOT NULL DEFAULT 1,
+  `child_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `comments`
+--
+
+INSERT INTO `comments` (`id`, `commenter_id`, `commenter_type`, `guest_name`, `guest_email`, `commentable_type`, `commentable_id`, `comment`, `approved`, `child_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
+(1, 'estonoesuntest@notest.com', 'App\\User', NULL, NULL, 'App\\Meme', '6', 'ez rewards', 1, NULL, NULL, '2020-06-21 06:38:24', '2020-06-21 06:38:24');
 
 -- --------------------------------------------------------
 
@@ -42,7 +71,40 @@ CREATE TABLE `meme` (
 INSERT INTO `meme` (`idMeme`, `tituloMeme`, `fechaMeme`, `rutaMeme`, `User_correoUser`) VALUES
 (1, 'Jojo', '2020-05-22 00:00:00', '2020-05-22 04-56-44estebanleivas103-gmail-com.png', 'estebanleivas103@gmail.com'),
 (3, 'MemeTest1', '2020-06-19 21:58:38', '2020-06-19 21-58-38test-test-com.png', 'test@test.com'),
-(4, 'MemeTest2', '2020-06-19 21:59:24', '2020-06-19 21-59-24test-test-com.png', 'test@test.com');
+(4, 'MemeTest2', '2020-06-19 21:59:24', '2020-06-19 21-59-24test-test-com.png', 'test@test.com'),
+(6, 'Give me rewards', '2020-06-21 03:38:10', '2020-06-21 03-38-10estonoesuntest-notest-com.png', 'estonoesuntest@notest.com');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2018_06_30_113500_create_comments_table', 1),
+(2, '2020_05_15_034924_create_momins_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `momins`
+--
+
+CREATE TABLE `momins` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -64,7 +126,34 @@ INSERT INTO `puntuacion` (`User_correoUser`, `Meme_idMeme`, `valorPuntuacion`) V
 ('test@test.com', 3, 1),
 ('test@test.com', 1, 1),
 ('test@test.com', 4, 1),
-('test2@test.com', 4, 1);
+('test2@test.com', 4, 1),
+('estonoesuntest@notest.com', 1, 1),
+('estonoesuntest@notest.com', 3, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `recompensa`
+--
+
+CREATE TABLE `recompensa` (
+  `id` int(11) NOT NULL,
+  `nivel` int(11) NOT NULL,
+  `tipo` varchar(50) NOT NULL,
+  `contenido` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `recompensa`
+--
+
+INSERT INTO `recompensa` (`id`, `nivel`, `tipo`, `contenido`) VALUES
+(1, 10, 'Titulo', 'Novato'),
+(2, 20, 'Titulo', 'Experimentado'),
+(3, 40, 'Medalla', '<span class=\"badge badge-pill badge-secondary\"><i class=\"fa fa-angle-double-down\"></i>Veterano</span>'),
+(4, 50, 'Titulo', 'Sabio'),
+(5, 90, 'Medalla', '<span class=\"badge badge-pill badge-warning\"><i class=\"fa fa-chess-king\"></i>Rey</span>'),
+(6, 100, 'Titulo', 'Meme Lord');
 
 -- --------------------------------------------------------
 
@@ -147,15 +236,45 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`correoUser`, `nickUser`, `passwordUser`, `tipoUser`, `experienciaUser`, `avatarUser`) VALUES
-('estebanleivas103@gmail.com', 'esteby', 'lpmconesto', 'Admin', 55, 'ninguno.png'),
-('estonoesuntest@notest.com', 'No testeador', '$2y$10$M8j4ONwWkAE5CZtw9zYlvOahqckkCNyGQQGtepYTCLic9ZeoTFKy6', 'Usuario', 0, 'estonoesuntest@notest.com.png'),
+('estebanleivas103@gmail.com', 'esteby', '$2y$12$g1XJAsCpw9gJn27wUZJh/.akeq1FQ5EHjj9nPvpxYloHQmVEs82Xi', 'Admin', 60, 'ninguno.png'),
+('estonoesuntest@notest.com', 'No testeador', '$2y$12$g1XJAsCpw9gJn27wUZJh/.akeq1FQ5EHjj9nPvpxYloHQmVEs82Xi', 'Usuario', 50, 'estonoesuntest@notest.com.png'),
 ('test2@test.com', 'Testeador2', '$2y$10$Qtc92r61ju9I2A0xDzWiB.411Jk5VhdHgiIe2fHj0yXrZkl0ILveW', 'normy', 0, 'ninguno.png'),
 ('test3@test.com', 'Testeador3', '$2y$10$2jpL4GCX.kC9nM7VNSQR7.lDacULcRcNsWRSOPc9HV11odEEiPKbu', 'normy', 0, 'ninguno.png'),
-('test@test.com', 'Testeador', '$2y$10$WKH9KDkRItQCM4GeKyy1Z.reyxjb60xuGp0yPtvhmggkqE371p0Wy', 'normy', 65, 'test@test.com.png');
+('test@test.com', 'Testeador', '$2y$10$WKH9KDkRItQCM4GeKyy1Z.reyxjb60xuGp0yPtvhmggkqE371p0Wy', 'normy', 70, 'test@test.com.png');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `user_has_recompensas`
+--
+
+CREATE TABLE `user_has_recompensas` (
+  `correoUser` varchar(320) CHARACTER SET utf8 NOT NULL,
+  `idRecompensa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `user_has_recompensas`
+--
+
+INSERT INTO `user_has_recompensas` (`correoUser`, `idRecompensa`) VALUES
+('estebanleivas103@gmail.com', 4),
+('estonoesuntest@notest.com', 4),
+('test@test.com', 4),
+('test@test.com', 6);
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comments_commenter_id_commenter_type_index` (`commenter_id`,`commenter_type`),
+  ADD KEY `comments_commentable_type_commentable_id_index` (`commentable_type`,`commentable_id`),
+  ADD KEY `comments_child_id_foreign` (`child_id`);
 
 --
 -- Indices de la tabla `meme`
@@ -165,11 +284,29 @@ ALTER TABLE `meme`
   ADD KEY `fk_Meme_User_idx` (`User_correoUser`);
 
 --
+-- Indices de la tabla `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `momins`
+--
+ALTER TABLE `momins`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `puntuacion`
 --
 ALTER TABLE `puntuacion`
   ADD KEY `fk_Puntuacion_User1_idx` (`User_correoUser`),
   ADD KEY `fk_Puntuacion_Meme1_idx` (`Meme_idMeme`);
+
+--
+-- Indices de la tabla `recompensa`
+--
+ALTER TABLE `recompensa`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indices de la tabla `suscripcion`
@@ -202,18 +339,55 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `correoUser_UNIQUE` (`correoUser`);
 
 --
+-- Indices de la tabla `user_has_recompensas`
+--
+ALTER TABLE `user_has_recompensas`
+  ADD PRIMARY KEY (`correoUser`,`idRecompensa`) USING BTREE,
+  ADD KEY `idRecompensa` (`idRecompensa`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `meme`
 --
 ALTER TABLE `meme`
-  MODIFY `idMeme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idMeme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `momins`
+--
+ALTER TABLE `momins`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `recompensa`
+--
+ALTER TABLE `recompensa`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `comments`
+--
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comments_child_id_foreign` FOREIGN KEY (`child_id`) REFERENCES `comments` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `meme`
@@ -241,6 +415,13 @@ ALTER TABLE `suscripcion`
 ALTER TABLE `tag_has_meme`
   ADD CONSTRAINT `fk_Tag_has_Meme_Meme1` FOREIGN KEY (`Meme_idMeme`) REFERENCES `meme` (`idMeme`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Tag_has_Meme_Tag1` FOREIGN KEY (`Tag_nombreTag`) REFERENCES `tag` (`nombreTag`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `user_has_recompensas`
+--
+ALTER TABLE `user_has_recompensas`
+  ADD CONSTRAINT `user_has_recompensas_ibfk_1` FOREIGN KEY (`correoUser`) REFERENCES `user` (`correoUser`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `user_has_recompensas_ibfk_2` FOREIGN KEY (`idRecompensa`) REFERENCES `recompensa` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
