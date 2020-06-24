@@ -89,7 +89,7 @@
                         $.ajax({ 
                             type:'GET',
                             url:"{{route('searchTag')}}",
-                            data:{'nombreTag':query},
+                            data:{'nombreTag':query, 'tipo':'enMeme'},
                             success:function(data){
                                 $('#tag_list').html(data);
                             },
@@ -99,7 +99,7 @@
                         });
                     });
 
-                    $(document).on('click', 'li', function(){
+                    $(document).on('click', 'li.memeli', function(){
                         var nombreTag = $(this).data('value');
                         $('#tag_list').html("");
 

@@ -52,6 +52,8 @@ Route::get('/searchTag','TagController@searchTag')->name('searchTag');
 Route::post('/crearTag','TagController@store')->name('storeTag');
 Route::post('/agregarTag','Tag_has_MemeController@store')->name('storeTag_has_Meme');
 
+Route::get('/buscar/{busqueda?}/{especifico?}', 'TagController@buscador')->name('buscar');
+
 /*Route::get('/test', function () {
     return view('test');
 });*/

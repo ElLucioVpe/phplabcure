@@ -10,8 +10,13 @@
                 <a class="nav-link" href="/subirMeme">Subir meme</a>
             </li>
         </ul>
-        <form class="form-inline mt-2 mt-md-0 ml-auto mr-2">
-            <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
+        <form class="form-inline mt-2 mt-md-0 ml-auto mr-2" onsubmit="headerSearch('#search-bar', false); return false;" method="post" action="">
+            <div class="col">
+                <div class="form-group">
+                    <input id="search-bar" class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar">
+                </div>
+                <div class="dropdown" id="tag_list_header" style="position:absolute;"></div>                    
+            </div>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
         </form>
         <ul class="navbar-nav">
@@ -46,6 +51,41 @@
                     }
                 </script>
             @endif
+            <script type="text/javascript">
+                function headerSearch(sender, especifico) {
+                    var busqueda = "";
+                    if(sender == "#search-bar") busqueda = $(sender).val();
+                    else busqueda = $(sender).data('value');
+                
+                    var url = "{{route('buscar', [':busqueda', ':especifico'])}}";
+                    url = url.replace(':busqueda', busqueda);
+                    url = url.replace(':especifico', especifico);
+                    window.location = url;
+                }
+                
+                $(document).ready(function () {
+
+                    $('#search-bar').on('keyup',function() {
+                        var query = $(this).val(); 
+                        $.ajax({ 
+                            type:'GET',
+                            url:"{{route('searchTag')}}",
+                            data:{'nombreTag':query, 'tipo':'enHeader'},
+                            success:function(data){
+                                $('#tag_list_header').html(data);
+                            },
+                            error:function(){
+                                alert("Sucedio un error en la busqueda");
+                            }
+                        });
+                    });
+
+                    $(document).on('click', 'li.headerli', function(){
+                        headerSearch(this, true);
+                    });
+
+                });
+            </script>
         </ul>
     </div>
 </nav>

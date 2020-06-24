@@ -105,11 +105,15 @@ class TagController extends Controller
             if($request->nombreTag != "") {
 
                 $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
-                if($tagEspecifico == null) $output .= '<li class="list-group-item" data-value="'.$request->nombreTag.'">'.'Crear Tag: '.$request->nombreTag.'</li>';
+                
+                $clase_li = "list-group-item memeli";
+                if($request->tipo == "enHeader") $clase_li = "list-group-item headerli";
+                
+                if($tagEspecifico == null && $request->tipo == "enMeme") $output .= '<li class="'.$clase_li.'" data-value="'.$request->nombreTag.'">'.'Crear Tag: '.$request->nombreTag.'</li>';
                 
                 if (count($data)>0) {
                     foreach ($data as $row){
-                        $output .= '<li class="list-group-item" data-value="'.$row->nombreTag.'">'.$row->nombreTag.'</li>';
+                        $output .= '<li class="'.$clase_li.'" data-value="'.$row->nombreTag.'">'.$row->nombreTag.'</li>';
                     }
                 }
                 $output .= '</ul>';
@@ -136,5 +140,35 @@ class TagController extends Controller
         }
 
         return $memes;
+    }
+    
+    public function getMemesTag($nombreTag, $especifico) { 
+        $especifico = filter_var($especifico, FILTER_VALIDATE_BOOLEAN);
+        $memes = new Collection();
+
+        if($especifico){
+            $temp = Tag :: find($nombreTag);
+            if($temp != null) $memes = $temp->memes;
+        } else {
+            $tags = Tag::where('nombreTag', 'LIKE', $nombreTag.'%')->get();
+            foreach($tags as $tag){
+                $memes = $memes->merge($tag->memes);
+            }
+        }
+        return $memes;
+    }
+
+    //Por si luego queremos reutilizar getMemesTag
+    public function buscador(Request $request, $busqueda, $especifico) {
+
+        if($busqueda == null || $busqueda == '') {
+            $busqueda = $request->busqueda;
+            $especifico = $request->especifico;
+        }
+
+        $memes = $this->getMemesTag($busqueda, $especifico)->sortBy(function($meme){
+            return $meme->fechaMeme;
+        })->reverse();
+        return view('buscar', compact('memes'));
     }
 }
