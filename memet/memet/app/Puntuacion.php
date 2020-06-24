@@ -44,7 +44,7 @@ class Puntuacion extends Model
         return $this->belongsTo('App\User', 'User_correoUser', 'correoUser');
     }
 
-        /**
+    /**
      * Set the keys for a save update query.
      *
      * @param  \Illuminate\Database\Eloquent\Builder  $query

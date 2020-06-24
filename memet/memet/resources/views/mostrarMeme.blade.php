@@ -11,6 +11,11 @@
                         {{$memeMostrar->user->nickUser ?? 'usuario eliminado'}}
                     </a>
                 </div>
+                @if($user = Auth::user())
+                    @if($user->correoUser == $memeMostrar->user->correoUser || $user->tipoUser == 'Admin')
+                        <a href="{{route('editarMeme', $memeMostrar->idMeme)}}"><i class="fa fa-edit"></i></a>
+                    @endif
+                @endif
             </div>
             <div class="modal-header">
                 <h5 class="modal-title">{{$memeMostrar->tituloMeme}}</h5>

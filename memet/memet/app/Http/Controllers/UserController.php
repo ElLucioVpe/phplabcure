@@ -113,10 +113,12 @@ class UserController extends Controller
         $userUpdate = User :: findOrFail($correoUser);
         $userUpdate->timestamps = false;
         $userUpdate->nickUser=$request->nickUser;
-        $userUpdate->passwordUser=bcrypt($request->passwordUser);
+
+        if($request->passwordUser != '' && $request->passwordUser != null)
+            $userUpdate->passwordUser=bcrypt($request->passwordUser);
 
 
-       if($request->avatar!=null){
+        if($request->avatar!=null){
             $request->validate(['avatar'=>'image|mimes:jpeg,png,jpg|max:2048']);
             $image = $request->file('avatar');
             $new_name = $correoUser.'.png';

@@ -38,6 +38,10 @@ Route::get('/subirMeme', function () {
 
 Route::get('/mostrarMeme/{idMeme}','MemeController@show')->name('mostrarMeme');
 Route::post('/subirMeme','MemeController@store')->name('storeMeme');
+Route::get('/editarMeme/{idMeme}','MemeController@edit')->name('editarMeme');
+Route::put('/updateMeme/{idMeme}','MemeController@update')->name('updateMeme');
+Route::delete('/eliminarMeme/{idMeme}','MemeController@destroy')->name('eliminarMeme');
+
 Route::post('/puntuarMeme/{correoUser}/{meme_id}/{valor}','PuntuacionController@puntuarMeme')->name('puntuarMeme');
 
 Route::get('/suscripciones/{correoUser}','SuscripcionController@suscripcionesUser')->name('suscripciones');

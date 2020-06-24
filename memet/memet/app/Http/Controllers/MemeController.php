@@ -128,8 +128,8 @@ class MemeController extends Controller
      */
     public function edit($idMeme)
     {
-        $memeModificar = Meme :: findOrFail($idMeme);
-        return view('editarMeme', compact('memeModificar'));
+        $memeActualizar = Meme :: findOrFail($idMeme);
+        return view('editarMeme', compact('memeActualizar'));
     }
 
     /**
@@ -144,11 +144,16 @@ class MemeController extends Controller
         $memeUpdate = Meme :: findOrFail($idMeme);
         $memeUpdate->timestamps = false;
         $memeUpdate->tituloMeme = $request->tituloMeme;
-        $memeUpdate->rutaMeme = $request->rutaMeme;
-        $memeUpdate->tags = $request->tags;
+
+        //Remuevo todos los Tags del meme, para evitar que se mantengan los que se removieron en la view
+        app('App\Http\Controllers\Tag_has_MemeController')->removeTags($idMeme);
+        //Agrego Tags
+        if($request->tags != null) {
+            app('App\Http\Controllers\Tag_has_MemeController')->addTags($idMeme, $request->tags);
+        }
 
         $memeUpdate->save();
-        return back()->with('update', 'El meme fue modificado con exito');
+        return back()->with('updateMeme', 'El meme fue modificado con exito');
     }
 
     /**
@@ -160,8 +165,10 @@ class MemeController extends Controller
     public function destroy($idMeme)
     {
         $memeEliminar = Meme :: findOrFail($idMeme);
+        
+        app('App\Http\Controllers\Tag_has_MemeController')->removeTags($idMeme);//Remuevo todos los Tags del meme
         $memeEliminar->delete();
-        return back()->with('eliminar', 'El meme fue eliminado con exito');
+        return redirect()->route('index');
     }
 
     public function desreferenciarMeme($idMeme)

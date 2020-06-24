@@ -92,9 +92,20 @@ class Tag_has_MemeController extends Controller
      * @param  \App\Tag_has_Meme  $tag_has_Meme
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tag_has_Meme $tag_has_Meme)
+    public function destroy($nombreTag, $idMeme)
     {
-        //
+        $tag_has_MemeEliminar = Tag_has_Meme ::where('Tag_nombreTag', '=', $nombreTag)
+        ->where('Meme_idMeme', '=', $idMeme)
+        ->first();
+        $tag_has_MemeEliminar->delete();
+    }
+
+    public function removeTags($idMeme){
+        $lista = Tag_has_Meme::where('Meme_idMeme', "=", $idMeme)->get();
+
+        foreach($lista as $tagMeme) {
+            $tagMeme->delete();
+        }
     }
 
     public function addTags($idMeme, $listaTags){

@@ -6,7 +6,7 @@
                 <div class="modal-header mx-auto">
                     <h4 class="modal-title">Perfil de {{$userMostrar->nickUser}}
                         @if($user = Auth::user())
-                            @if($user->correoUser == $userMostrar->correoUser)
+                            @if($user->correoUser == $userMostrar->correoUser || $user->tipoUser == 'Admin')
                             <a href="{{route('editarUser', ['correoUser' => $userMostrar->correoUser])}}"><i class="fa fa-edit"></i></a>
                             @endif
                         @endif
@@ -25,12 +25,15 @@
                                 <small><span class="badge badge-info">Nivel {{$nivelUser}}</span></small>
                             </h3>
                             
-                            @if(!empty($recompensas->medallas))
+                            @if(!empty($recompensas->medallas) || $userMostrar->tipoUser == 'Admin')
                                 <h5>
                                     @foreach($recompensas->medallas as $medalla)
                                         <!-- Las medallas se guardan como html para poder ser mas personalizadas -->
                                         {!! $medalla !!}
                                     @endforeach
+                                    @if($userMostrar->tipoUser == 'Admin')
+                                        <span class="badge badge-pill badge-primary"><i class="fa fa-star"></i>Admin<i class="fa fa-star"></i></span>
+                                    @endif
                                 </h5>
                                 <hr/>
                             @endif
