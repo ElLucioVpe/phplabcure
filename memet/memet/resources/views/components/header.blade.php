@@ -17,7 +17,7 @@
                 </div>
                 <div class="dropdown" id="tag_list_header" style="position:absolute;"></div>                    
             </div>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
         </form>
         <ul class="navbar-nav">
             @if(Auth::guest())
@@ -32,7 +32,15 @@
                     <a class="nav-link" href="/perfilUser/{{$user->correoUser}}">{{$user->nickUser}}</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" href="javascript:logout()">Cerrar Sesion</a>
+                    <div class="dropdown">
+                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownHeaderButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right bg-darker" aria-labelledby="dropdownHeaderButton">
+                            <a class="dropdown-item bg-dark text-white" href="/suscripciones/{{$user->correoUser}}">Suscripciones</a>
+                            <a class="dropdown-item bg-dark text-white" href="javascript:logout()">Cerrar Sesion</a>
+                        </div>
+                    </div>
                 </li>
 
                 <script>

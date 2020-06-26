@@ -1,11 +1,15 @@
 @extends('plantilla')
 
 @section('content')
-    
-    <div class="row">
+
+@if($user = Auth::user())
+
+ @if($user->correoUser == $correoUser || $user->tipoUser == 'Admin')
+ <div class="pt-5 row">
+    <div class="col-md-8 mx-auto">
         <div class="card text-center mx-auto">
-            <div class="card-header">
-                <h2>Suscripciones</h2>
+            <div class="card-header bg-dark">
+                <h2 class="text-white">Suscripciones</h2>
             </div>
             <div class="card-body">
 
@@ -43,5 +47,15 @@
             </div>
         </div>
     </div>
-    
+ </div>
+ @else
+    <script type="text/javascript">
+        window.location = "{{ route('index') }}";
+    </script>
+ @endif
+@else
+    <script type="text/javascript">
+        window.location = "{{ route('index') }}";
+    </script>
+@endif   
 @endsection

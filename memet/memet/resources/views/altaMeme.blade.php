@@ -13,58 +13,65 @@
 
         {{--Form--}}
         <center>
-        <div class="col-md-6">
-            <h3 class="text-center mb-4">Subir Meme</h3>
-
-            <form action="{{route('storeMeme')}}" method="POST" enctype="multipart/form-data" id="subirMeme">
-                <div class="form-group">
-                    <label for="tituloMeme">Titulo:</label>
-                    <input type="text" name="tituloMeme" id="tituloMeme" placeholder="Nuevo Meme">
+        <div class="col-md-8">
+            <div class="card mx-auto">
+                <div class="card-header bg-dark">
+                    <h3 class="text-center text-white">Subir Meme</h3>
                 </div>
-                
-                @csrf
-                <div class="form-group">
-                    <label for="rutaMeme">Seleccione una archivo para subir:</label>
-                    <input type="file" name="rutaMeme" id="rutaMeme" placeholder="Meme" required>
-                    <embed id="memeFile" src="" width="450" height="300" hidden>
-                </div>
-                @error('rutaMeme')
-                    <div class="alert alert-danger">
-                        Por favor seleccione una imagen o video para subir.
-                    </div>
-                @enderror
-
-                <div class="form-group">
-                    <label id="tagsLabel">Tag/s:<br/><small>(Haga click en un tag para removerlo)</small></label>
-                    <div id="tagSpans">
-                        <!--Ejemplo de Span
-                            <span class="badge badge-primary m-1">nombreTag</span>
-                        -->
-                    </div>
-                    <div id="tagInputs">
-                        <!--Ejemplo de Input
-                            <input type="hidden" name="tags[]" value="nombreTag"/>
-                        -->
-                    </div>
-                    <div class="col-lg-6">
+                <div class="card-body">
+                    <form action="{{route('storeMeme')}}" method="POST" enctype="multipart/form-data" id="subirMeme">
                         <div class="form-group">
-                            <input type="text" name="tag_search" id="tag_search" placeholder="Ingresa un tag" class="form-control">
+                            <label for="tituloMeme">Titulo:</label>
+                            <input type="text" class="form-control" name="tituloMeme" id="tituloMeme" placeholder="Nuevo Meme">
                         </div>
-                        <div id="tag_list"></div>                    
-                    </div>
-                </div>
-                
-                <input type="hidden" name="correoUser" id="correoUser" value="{{$user->correoUser}}">
-                    
-                <button type="submit" class="btn btn-success btn-block">Subir</button>
-            </form>
+                        
+                        @csrf
+                        <div class="form-group">
+                            <label for="rutaMeme">Seleccione una archivo para subir:</label>
+                            <input type="file" class="form-control" name="rutaMeme" id="rutaMeme" placeholder="Meme" required>
+                            <embed id="memeFile" src="" width="450" height="300" hidden>
+                        </div>
+                        @error('rutaMeme')
+                            <div class="alert alert-danger">
+                                Por favor seleccione una imagen o video para subir.
+                            </div>
+                        @enderror
 
-            @if (session('agregar'))
-                <div class="alert alert-success mt-3">
-                    {{session('agregar')}}
+                        <div class="form-group">
+                            <label id="tagsLabel">Tag/s:<br/><small>(Haga click en un tag para removerlo)</small></label>
+                            <div id="tagSpans">
+                                <!--Ejemplo de Span
+                                    <span class="badge badge-primary m-1">nombreTag</span>
+                                -->
+                            </div>
+                            <div id="tagInputs">
+                                <!--Ejemplo de Input
+                                    <input type="hidden" name="tags[]" value="nombreTag"/>
+                                -->
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" name="tag_search" id="tag_search" placeholder="Ingresa un tag" class="form-control">
+                                </div>
+                                <div id="tag_list"></div>                    
+                            </div>
+                        </div>
+                        
+                        <input type="hidden" name="correoUser" id="correoUser" value="{{$user->correoUser}}">
+                            
+                        <button type="submit" class="btn btn-outline-success btn-block">Subir</button>
+                    </form>
+
+                    @if (session('agregar'))
+                        <div class="alert alert-success mt-3">
+                            {{session('agregar')}}
+                        </div>
+                    @endif
                 </div>
-            @endif
-            
+            </div>
+        </div>
+         {{--Fin Form--}}
+        </center>
             <script type="text/javascript">
                 $(document).ready(function () {
 
@@ -131,10 +138,6 @@
 
                 });
             </script>
-
-        </div>
-         {{--Fin Form--}}
-        </center>
 
     </div>
    

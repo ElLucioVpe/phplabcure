@@ -1,44 +1,79 @@
 @extends('plantilla')
 
 @section('content')
-    <script>
-        $(document).ready(function () {
-            $('#memes').DataTable();
-            $('.dataTables_length').addClass('bs-select');
-        });
-    </script>
 
     <div class="pt-5 container">
         <div class="row">
             <div class="col">
                 <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-memes" role="tabpanel" aria-labelledby="nav-new-tab">
-                        <table id="memes" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-                            <colgroup>
-                                <col span="1" style="width: 10%;">
-                                <col span="1" style="width: auto;">
-                            </colgroup>
-                            <thead>
-                                <th></th>
-                                <th></th>
-                            </thead>
-                            <tbody>
-                                @foreach ($memes as $meme)
-                                    <tr>
-                                        <td>
-                                            <a href="{{url('mostrarMeme/'.$meme->idMeme)}}">
-                                                <img src="{{url('storage/memes/'.$meme->rutaMeme)}}" class="img-thumbnail" width="100" height="100">
-                                            </a>
-                                        </td>
-                                        <td><a href="{{url('mostrarMeme/'.$meme->idMeme)}}" style="color:black">{{$meme->tituloMeme}}</a></td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                        @foreach ($memes as $meme)
+                        <div class="card mx-auto" style="width: 32rem;">
+                            <div class="card-body">
+                                <small class="card-text autor">
+                                    <a href="{{url('perfilUser').'/'.($meme->user->correoUser ?? 'eliminado')}}" style="color:black;">
+                                        {{$meme->user->nickUser ?? 'usuario eliminado'}}
+                                    </a>
+                                </small>
+                                <p class="card-text titulo"><a href="{{url('mostrarMeme/'.$meme->idMeme)}}" style="color:black">{{$meme->tituloMeme}}</a></p>
+                                <img class="card-img-bottom" src="{{url('storage/memes/'.$meme->rutaMeme)}}">
+                                <div class="d-flex justify-content-between align-items-center mt-1">
+                                    <div class="btn-group">
+                                        <button id="like" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme('1')">
+                                            <i class="fa fa-thumbs-up"></i>
+                                        </button>
+                                        <button id="dislike" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme('0')">
+                                            <i class="fa fa-thumbs-down"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
                 </div>
             </div>
         </div>
     </div>
+
+    @if($user = Auth::user())
+        <script type="text/javascript"> var user = '{{$user->correoUser}}'; </script>
+    @else 
+        <script type="text/javascript"> var user = "none"; </script>
+    @endif
+
+    <script type="text/javascript">
+        function puntuarMeme(value) {
+            var meme = {{$meme->idMeme}};
+            console.log(user);
+            if(user != "none") {
+                $.ajax({ 
+                    type:'POST',
+                    url:"{{url('/puntuarMeme')}}"+'/'+user+'/'+meme+'/'+value,
+                    success:function(data){
+                        console.log(data);
+                        var span = "like-span";
+                        var anti_span = "dislike-span";
+                        if(data[1] == 0) {
+                            span = "dislike-span";
+                            anti_span = "like-span";
+                        }
+
+                        if(data[0] == "store") 
+                            document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)+1;
+                        else if(data[0] == "destroy")
+                            document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)-1;
+                        else if(data[0] == "update") {
+                            document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)+1;
+                            document.getElementById(anti_span).textContent = parseInt(document.getElementById(anti_span).innerText)-1;
+                        }
+                        
+                    },
+                    error:function() {
+                        console.log("Sucedio un error en la puntuacion");
+                    }
+                });
+            } else alert("Inicie Sesion");
+        }
+    </script>
 
 @endsection

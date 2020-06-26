@@ -25,7 +25,7 @@ class SuscripcionController extends Controller
         $user = User :: findOrFail($correoUser);
         $suscripciones = $user->suscripcions;
 
-        return view('suscripciones', compact('suscripciones'));
+        return view('suscripciones', compact('correoUser', 'suscripciones'));
     }
 
     /**
