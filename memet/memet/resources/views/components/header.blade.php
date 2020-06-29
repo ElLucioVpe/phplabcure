@@ -5,11 +5,6 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/subirMeme">Subir meme</a>
-            </li>
-        </ul>
         <form class="form-inline mt-2 mt-md-0 ml-auto mr-2" onsubmit="headerSearch('#search-bar', false); return false;" method="post" action="">
             <div class="col">
                 <div class="form-group">
