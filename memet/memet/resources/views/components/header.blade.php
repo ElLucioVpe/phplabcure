@@ -32,15 +32,7 @@
                     <a class="nav-link" href="/perfilUser/{{$user->correoUser}}">{{$user->nickUser}}</a>
                 </li>
                 <li class="nav-item active">
-                    <div class="dropdown">
-                        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownHeaderButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-bars" aria-hidden="true"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right bg-darker" aria-labelledby="dropdownHeaderButton">
-                            <a class="dropdown-item bg-dark text-white" href="/suscripciones/{{$user->correoUser}}">Suscripciones</a>
-                            <a class="dropdown-item bg-dark text-white" href="javascript:logout()">Cerrar Sesion</a>
-                        </div>
-                    </div>
+                    <a class="nav-link" href="javascript:logout()">Cerrar Sesion</a>
                 </li>
 
                 <script>

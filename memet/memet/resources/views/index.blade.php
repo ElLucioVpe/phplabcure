@@ -4,8 +4,9 @@
     <!-- El yield aca cambia el content -->
     <div class="pt-5 container">
         <div class="row">
+            
             <div class="col">
-                <nav>
+                <nav style="width:75%; margin:auto">
                     <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
                         <a class="nav-item nav-link active bg-dark text-white" id="nav-new-tab" data-toggle="tab" href="#nav-new" role="tab" aria-controls="nav-new" aria-selected="true">NEW</a>
                         <a class="nav-item nav-link bg-dark text-white" id="nav-hot-tab" data-toggle="tab" href="#nav-hot" role="tab" aria-controls="nav-hot" aria-selected="false">HOT</a>
@@ -15,7 +16,7 @@
                     <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-new" role="tabpanel" aria-labelledby="nav-new-tab">
                             @foreach ($memesNEW as $meme)
-                            <div class="card mx-auto" style="width: 32rem;">
+                            <div class="card mx-auto meme-card">
                                 <div class="card-body">
                                     <small class="card-text autor">
                                         <a href="{{url('perfilUser').'/'.($meme->user->correoUser ?? 'eliminado')}}" style="color:black;">
@@ -40,7 +41,7 @@
                         </div>
                         <div class="tab-pane fade justify-content-center" id="nav-hot" role="tabpanel" aria-labelledby="nav-hot-tab">
                             @foreach ($memesHOT as $meme)
-                            <div class="card mx-auto" style="width: 32rem;">
+                            <div class="card mx-auto meme-card">
                                 <div class="card-body">
                                     <small class="card-text autor">
                                         <a href="{{url('perfilUser').'/'.($meme->user->correoUser ?? 'eliminado')}}" style="color:black;">
@@ -65,7 +66,7 @@
                         </div>
                         <div class="tab-pane fade justify-content-center" id="nav-rec" role="tabpanel" aria-labelledby="nav-rec-tab">
                             @foreach ($memesREC as $meme)
-                            <div class="card mx-auto" style="width: 32rem;">
+                            <div class="card mx-auto meme-card">
                                 <div class="card-body">
                                     <small class="card-text autor">
                                         <a href="{{url('perfilUser').'/'.($meme->user->correoUser ?? 'eliminado')}}" style="color:black;">
@@ -89,9 +90,6 @@
                             @endforeach
                         </div>
                     </div>
-                    
-                    </div>
-                </div>
             </div>
         </div>
     </div>

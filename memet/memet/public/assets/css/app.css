@@ -10932,3 +10932,11 @@ a.text-dark:focus {
   background: black;
 }
 
+.meme-card {
+  width: 32rem;
+}
+@media screen and (max-width: 1000px) { 
+  .meme-card {
+    width: 100%;
+  }
+}

@@ -8,7 +8,7 @@
                 <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
                     <div class="tab-pane fade show active" id="nav-memes" role="tabpanel" aria-labelledby="nav-new-tab">
                         @foreach ($memes as $meme)
-                        <div class="card mx-auto" style="width: 32rem;">
+                        <div class="card mx-auto meme-card">
                             <div class="card-body">
                                 <small class="card-text autor">
                                     <a href="{{url('perfilUser').'/'.($meme->user->correoUser ?? 'eliminado')}}" style="color:black;">
