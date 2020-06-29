@@ -56,17 +56,19 @@
                     var busqueda = "";
                     if(sender == "#search-bar") busqueda = $(sender).val();
                     else busqueda = $(sender).data('value');
-                
+
                     var url = "{{route('buscar', [':busqueda', ':especifico'])}}";
                     url = url.replace(':busqueda', busqueda);
                     url = url.replace(':especifico', especifico);
+                    
+                    if(busqueda.length === 0) url = "/";
                     window.location = url;
                 }
                 
                 $(document).ready(function () {
 
                     $('#search-bar').on('keyup',function() {
-                        var query = $(this).val(); 
+                        var query = $(this).val();
                         $.ajax({ 
                             type:'GET',
                             url:"{{route('searchTag')}}",

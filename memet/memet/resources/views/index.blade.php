@@ -27,10 +27,10 @@
                                     <img class="card-img-bottom" src="{{url('storage/memes/'.$meme->rutaMeme)}}">
                                     <div class="d-flex justify-content-between align-items-center mt-1">
                                         <div class="btn-group">
-                                            <button id="like" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme('1')">
+                                            <button id="like" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme({{$meme->idMeme}},'1')">
                                                 <i class="fa fa-thumbs-up"></i>
                                             </button>
-                                            <button id="dislike" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme('0')">
+                                            <button id="dislike" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme({{$meme->idMeme}},'0')">
                                                 <i class="fa fa-thumbs-down"></i>
                                             </button>
                                         </div>
@@ -52,10 +52,10 @@
                                     <img class="card-img-bottom" src="{{url('storage/memes/'.$meme->rutaMeme)}}">
                                     <div class="d-flex justify-content-between align-items-center mt-1">
                                         <div class="btn-group">
-                                            <button id="like" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme('1')">
+                                            <button id="like" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme({{$meme->idMeme}},'1')">
                                                 <i class="fa fa-thumbs-up"></i>
                                             </button>
-                                            <button id="dislike" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme('0')">
+                                            <button id="dislike" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme({{$meme->idMeme}},'0')">
                                                 <i class="fa fa-thumbs-down"></i>
                                             </button>
                                         </div>
@@ -77,10 +77,10 @@
                                     <img class="card-img-bottom" src="{{url('storage/memes/'.$meme->rutaMeme)}}">
                                     <div class="d-flex justify-content-between align-items-center mt-1">
                                         <div class="btn-group">
-                                            <button id="like" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme('1')">
+                                            <button id="like" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme({{$meme->idMeme}},'1')">
                                                 <i class="fa fa-thumbs-up"></i>
                                             </button>
-                                            <button id="dislike" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme('0')">
+                                            <button id="dislike" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme({{$meme->idMeme}},'0')">
                                                 <i class="fa fa-thumbs-down"></i>
                                             </button>
                                         </div>
@@ -93,5 +93,36 @@
             </div>
         </div>
     </div>
+
+    @if($user = Auth::user())
+        <script type="text/javascript"> var user = '{{$user->correoUser}}'; </script>
+    @else 
+        <script type="text/javascript"> var user = "none"; </script>
+    @endif
+
+    <script type="text/javascript">
+        function puntuarMeme(meme, value) {
+            console.log(user);
+            if(user != "none") {
+                $.ajax({ 
+                    type:'POST',
+                    url:"{{url('/puntuarMeme')}}"+'/'+user+'/'+meme+'/'+value,
+                    success:function(data){
+                        console.log(data);
+                        var span = "like-span";
+                        var anti_span = "dislike-span";
+                        if(data[1] == 0) {
+                            span = "dislike-span";
+                            anti_span = "like-span";
+                        }
+                        
+                    },
+                    error:function() {
+                        console.log("Sucedio un error en la puntuacion");
+                    }
+                });
+            } else alert("Inicie Sesion");
+        }
+    </script>
 
 @endsection

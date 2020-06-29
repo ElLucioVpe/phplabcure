@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="perfil">
-            <div class="modal-content w-75 mx-auto mt-3">
+            <div class="modal-content mx-auto mt-3 modal-memet">
                 <div class="modal-header mx-auto">
                     <h4 class="modal-title">Perfil de {{$userMostrar->nickUser}}
                         @if($user = Auth::user())

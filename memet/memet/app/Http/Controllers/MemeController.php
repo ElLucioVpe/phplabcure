@@ -72,7 +72,7 @@ class MemeController extends Controller
         $request->validate(['correoUser'=>'required']);
         //$request->validate(['tags'=>'required']);
         //
-
+        date_default_timezone_set('America/Montevideo');
         $memeAgregar->timestamps = false;
         $memeAgregar->tituloMeme = $request->tituloMeme;
         $memeAgregar->fechaMeme = date("Y-m-d H-i-s");

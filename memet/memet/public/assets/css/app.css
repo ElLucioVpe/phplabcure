@@ -10935,8 +10935,26 @@ a.text-dark:focus {
 .meme-card {
   width: 32rem;
 }
+
+.meme-img {
+  width: 450px;
+  height: 300px;
+}
+
+.modal-memet {
+  width: 75%;
+}
+
 @media screen and (max-width: 1000px) { 
   .meme-card {
+    width: 100%;
+  }
+  .meme-img {
+    width: 100%;
+    height: auto;
+  }
+
+  .modal-memet {
     width: 100%;
   }
 }

@@ -24,12 +24,17 @@
                             <label for="tituloMeme">Titulo:</label>
                             <input type="text" class="form-control" name="tituloMeme" id="tituloMeme" placeholder="Nuevo Meme">
                         </div>
+                        @error('tituloMeme')
+                            <div class="alert alert-danger">
+                                Por favor ingrese un titulo.
+                            </div>
+                        @enderror
                         
                         @csrf
                         <div class="form-group">
                             <label for="rutaMeme">Seleccione una archivo para subir:</label>
                             <input type="file" class="form-control" name="rutaMeme" id="rutaMeme" placeholder="Meme" required>
-                            <embed id="memeFile" src="" width="450" height="300" hidden>
+                            <embed id="memeFile" class="meme-img" src="" width="450" hidden>
                         </div>
                         @error('rutaMeme')
                             <div class="alert alert-danger">
@@ -85,7 +90,7 @@
                             var reader = new FileReader();
                             reader.onload = function (e) {
                                 $('#rutaMeme + embed').remove();
-                                $('#rutaMeme').after('<embed src="'+e.target.result+'" width="450" height="300">');
+                                $('#rutaMeme').after('<embed id="memeFile" class="meme-img" src="'+e.target.result+'">');
                             };
                             reader.readAsDataURL(input.files[0]);
                         }

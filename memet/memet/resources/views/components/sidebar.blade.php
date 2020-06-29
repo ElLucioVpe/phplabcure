@@ -1,5 +1,5 @@
 
-  <a id="show-sidebar" class="btn btn-sm btn-dark pt-5 bg-darker" href="#">
+  <a id="show-sidebar" class="btn btn-sm btn-dark pt-5 bg-darker" style="z-index:1000;" href="#">
     <i class="fa fa-bars"></i>
   </a>
   <nav id="sidebar" class="sidebar-wrapper pt-5">
@@ -49,13 +49,13 @@
           <li class="header-menu">
             <span>General</span>
           </li>
-          @if($user = Auth::user())
           <li>
             <a href="/">
               <i class="fa fa-image"></i>
               <span>Memes</span>
             </a>
           </li>
+          @if($user = Auth::user())
           <li>
             <a href="/perfilUser/{{$user->correoUser}}">
               <i class="fa fa-user"></i>
@@ -126,6 +126,9 @@
 
 <script>
     //Funciones de SideBar
+    if($(window).width() < 1000) {
+        $(".page-wrapper").removeClass("toggled");
+    }
     jQuery(function ($) {
 
       $(".sidebar-dropdown > a").click(function() {

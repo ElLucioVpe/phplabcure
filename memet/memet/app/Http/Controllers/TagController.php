@@ -167,7 +167,7 @@ class TagController extends Controller
         }
 
         $memes = $this->getMemesTag($busqueda, $especifico)->sortBy(function($meme){
-            return $meme->fechaMeme;
+             return $meme->fechaMeme;
         })->reverse();
         return view('buscar', compact('memes'));
     }

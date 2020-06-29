@@ -19,10 +19,10 @@
                                 <img class="card-img-bottom" src="{{url('storage/memes/'.$meme->rutaMeme)}}">
                                 <div class="d-flex justify-content-between align-items-center mt-1">
                                     <div class="btn-group">
-                                        <button id="like" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme('1')">
+                                        <button id="like" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme({{$meme->idMeme}},'1')">
                                             <i class="fa fa-thumbs-up"></i>
                                         </button>
-                                        <button id="dislike" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme('0')">
+                                        <button id="dislike" type="button" class="btn btn btn-outline-dark" onclick="puntuarMeme({{$meme->idMeme}},'0')">
                                             <i class="fa fa-thumbs-down"></i>
                                         </button>
                                     </div>
@@ -42,8 +42,7 @@
     @endif
 
     <script type="text/javascript">
-        function puntuarMeme(value) {
-            var meme = {{$meme->idMeme}};
+        function puntuarMeme(meme, value) {
             console.log(user);
             if(user != "none") {
                 $.ajax({ 
@@ -56,15 +55,6 @@
                         if(data[1] == 0) {
                             span = "dislike-span";
                             anti_span = "like-span";
-                        }
-
-                        if(data[0] == "store") 
-                            document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)+1;
-                        else if(data[0] == "destroy")
-                            document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)-1;
-                        else if(data[0] == "update") {
-                            document.getElementById(span).textContent = parseInt(document.getElementById(span).innerText)+1;
-                            document.getElementById(anti_span).textContent = parseInt(document.getElementById(anti_span).innerText)-1;
                         }
                         
                     },

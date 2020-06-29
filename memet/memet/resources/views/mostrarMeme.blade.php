@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="info-meme">
-        <div class="modal-content w-75 mx-auto mt-3">
+        <div class="modal-content mx-auto mt-3 modal-memet">
             <div id="user-link" class="modal-header">
                 <div class="form-inline">
                     <small>Subido por:&nbsp</small>
@@ -60,6 +60,9 @@
                                 <button type="button" class="btn btn-outline-danger" data-dismiss="modal" onclick="accionTag(true)">
                                     Ignorar
                                 </button>
+                                <button type="button" class="btn btn-outline-dark" data-dismiss="modal" onclick="buscarTag()">
+                                    Buscar
+                                </button>
                             </div>
                             <div class="modal-footer mx-auto">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -98,7 +101,6 @@
     @endif
 
     <script type="text/javascript">
-
         function puntuarMeme(value) {
             var meme = {{$memeMostrar->idMeme}};
             console.log(user);
@@ -135,6 +137,11 @@
         function mostrarVentanaTag(tag) {
             $('#tagActionsLabel').html(tag);
             //console.log('update label to:'+$('#tagActionsLabel').html);
+        }
+
+        function buscarTag() {
+            var tag = $('#tagActionsLabel').html();
+            window.location = "/buscar/"+tag+"/true";
         }
 
         function accionTag(ignora) {

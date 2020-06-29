@@ -30,7 +30,7 @@
                             </div>
                             
                             <div class="form-group">
-                                <embed id="memeFile" src="{{ url('storage/memes/'.$memeActualizar->rutaMeme) }}" height="300">
+                                <embed id="memeFile" class="meme-img" src="{{ url('storage/memes/'.$memeActualizar->rutaMeme) }}">
                             </div>
 
                             <div class="form-group">
