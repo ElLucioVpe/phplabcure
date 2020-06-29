@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-06-2020 a las 05:41:18
+-- Tiempo de generación: 29-06-2020 a las 22:31:31
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.5
 
@@ -48,7 +48,11 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `commenter_id`, `commenter_type`, `guest_name`, `guest_email`, `commentable_type`, `commentable_id`, `comment`, `approved`, `child_id`, `deleted_at`, `created_at`, `updated_at`) VALUES
-(1, 'estonoesuntest@notest.com', 'App\\User', NULL, NULL, 'App\\Meme', '6', 'ez rewards', 1, NULL, NULL, '2020-06-21 06:38:24', '2020-06-21 06:38:24');
+(1, 'estonoesuntest@notest.com', 'App\\User', NULL, NULL, 'App\\Meme', '6', 'ez rewards', 1, NULL, '2020-06-24 05:14:52', '2020-06-21 06:38:24', '2020-06-24 05:14:52'),
+(2, NULL, NULL, '123', '123@123', 'App\\Meme', '1', '123', 1, NULL, NULL, '2020-06-26 01:50:54', '2020-06-26 01:50:54'),
+(3, 'admin@admins.com', 'App\\User', NULL, NULL, 'App\\Meme', '1', '456', 1, 2, NULL, '2020-06-29 06:20:54', '2020-06-29 06:20:54'),
+(4, 'admin@admins.com', 'App\\User', NULL, NULL, 'App\\Meme', '1', 'test', 1, NULL, NULL, '2020-06-29 06:22:12', '2020-06-29 06:22:12'),
+(5, 'admin@admins.com', 'App\\User', NULL, NULL, 'App\\Meme', '1', 'test2', 1, NULL, NULL, '2020-06-29 06:22:20', '2020-06-29 06:22:20');
 
 -- --------------------------------------------------------
 
@@ -69,10 +73,11 @@ CREATE TABLE `meme` (
 --
 
 INSERT INTO `meme` (`idMeme`, `tituloMeme`, `fechaMeme`, `rutaMeme`, `User_correoUser`) VALUES
-(1, 'Jojo', '2020-05-22 00:00:00', '2020-05-22 04-56-44estebanleivas103-gmail-com.png', 'estebanleivas103@gmail.com'),
+(1, 'Jojo Edited', '2020-05-22 00:00:00', '2020-05-22 04-56-44admin@admins.com.png', 'admin@admins.com'),
 (3, 'MemeTest1', '2020-06-19 21:58:38', '2020-06-19 21-58-38test-test-com.png', 'test@test.com'),
 (4, 'MemeTest2', '2020-06-19 21:59:24', '2020-06-19 21-59-24test-test-com.png', 'test@test.com'),
-(6, 'Give me rewards', '2020-06-21 03:38:10', '2020-06-21 03-38-10estonoesuntest-notest-com.png', 'estonoesuntest@notest.com');
+(7, 'wf', '2020-06-29 18:06:58', '2020-06-29 18-06-58admin-admins-com.png', 'admin@admins.com'),
+(8, 'titulo', '2020-06-29 15:12:07', '2020-06-29 15-12-07admin-admins-com.png', 'admin@admins.com');
 
 -- --------------------------------------------------------
 
@@ -128,7 +133,9 @@ INSERT INTO `puntuacion` (`User_correoUser`, `Meme_idMeme`, `valorPuntuacion`) V
 ('test@test.com', 4, 1),
 ('test2@test.com', 4, 1),
 ('estonoesuntest@notest.com', 1, 1),
-('estonoesuntest@notest.com', 3, 1);
+('estonoesuntest@notest.com', 3, 1),
+('admin@admins.com', 7, 1),
+('admin@admins.com', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -172,7 +179,8 @@ CREATE TABLE `suscripcion` (
 --
 
 INSERT INTO `suscripcion` (`User_correoUser`, `Tag_nombreTag`, `ignora`) VALUES
-('estebanleivas103@gmail.com', 'videojuegos', 0),
+('admin@admins.com', 'jojo', 0),
+('admin@admins.com', 'tas loco estos varchar son re locos no se que escribir para llenar este tag pero bueno hay que usar bien lo que tenemos, aprovechar, me entendes.', 1),
 ('test2@test.com', 'tas loco estos varchar son re locos no se que escribir para llenar este tag pero bueno hay que usar bien lo que tenemos, aprovechar, me entendes.', 0);
 
 -- --------------------------------------------------------
@@ -190,6 +198,8 @@ CREATE TABLE `tag` (
 --
 
 INSERT INTO `tag` (`nombreTag`) VALUES
+('interesting'),
+('jojo'),
 ('tag_Creado2'),
 ('tas loco estos varchar son re locos no se que escribir para llenar este tag pero bueno hay que usar bien lo que tenemos, aprovechar, me entendes.'),
 ('videojuegos'),
@@ -211,6 +221,7 @@ CREATE TABLE `tag_has_meme` (
 --
 
 INSERT INTO `tag_has_meme` (`Tag_nombreTag`, `Meme_idMeme`) VALUES
+('jojo', 1),
 ('tag_Creado2', 3),
 ('tag_Creado2', 4),
 ('tas loco estos varchar son re locos no se que escribir para llenar este tag pero bueno hay que usar bien lo que tenemos, aprovechar, me entendes.', 3),
@@ -236,11 +247,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`correoUser`, `nickUser`, `passwordUser`, `tipoUser`, `experienciaUser`, `avatarUser`) VALUES
-('estebanleivas103@gmail.com', 'esteby', '$2y$12$g1XJAsCpw9gJn27wUZJh/.akeq1FQ5EHjj9nPvpxYloHQmVEs82Xi', 'Admin', 60, 'ninguno.png'),
+('admin@admins.com', 'Admin', '$2y$12$g1XJAsCpw9gJn27wUZJh/.akeq1FQ5EHjj9nPvpxYloHQmVEs82Xi', 'Admin', 100000109, 'admin@admins.com.png'),
 ('estonoesuntest@notest.com', 'No testeador', '$2y$12$g1XJAsCpw9gJn27wUZJh/.akeq1FQ5EHjj9nPvpxYloHQmVEs82Xi', 'Usuario', 50, 'estonoesuntest@notest.com.png'),
-('test2@test.com', 'Testeador2', '$2y$10$Qtc92r61ju9I2A0xDzWiB.411Jk5VhdHgiIe2fHj0yXrZkl0ILveW', 'normy', 0, 'ninguno.png'),
-('test3@test.com', 'Testeador3', '$2y$10$2jpL4GCX.kC9nM7VNSQR7.lDacULcRcNsWRSOPc9HV11odEEiPKbu', 'normy', 0, 'ninguno.png'),
-('test@test.com', 'Testeador', '$2y$10$WKH9KDkRItQCM4GeKyy1Z.reyxjb60xuGp0yPtvhmggkqE371p0Wy', 'normy', 70, 'test@test.com.png');
+('test2@test.com', 'Testeador2', '$2y$10$Qtc92r61ju9I2A0xDzWiB.411Jk5VhdHgiIe2fHj0yXrZkl0ILveW', 'Usuario', 0, 'ninguno.png'),
+('test3@test.com', 'Testeador3', '$2y$10$2jpL4GCX.kC9nM7VNSQR7.lDacULcRcNsWRSOPc9HV11odEEiPKbu', 'Usuario', 0, 'ninguno.png'),
+('test@test.com', 'Nuevo Testeador', '$2y$12$g1XJAsCpw9gJn27wUZJh/.akeq1FQ5EHjj9nPvpxYloHQmVEs82Xi', 'Usuario', 75, 'test@test.com.png');
 
 -- --------------------------------------------------------
 
@@ -258,7 +269,12 @@ CREATE TABLE `user_has_recompensas` (
 --
 
 INSERT INTO `user_has_recompensas` (`correoUser`, `idRecompensa`) VALUES
-('estebanleivas103@gmail.com', 4),
+('admin@admins.com', 1),
+('admin@admins.com', 2),
+('admin@admins.com', 3),
+('admin@admins.com', 4),
+('admin@admins.com', 5),
+('admin@admins.com', 6),
 ('estonoesuntest@notest.com', 4),
 ('test@test.com', 4),
 ('test@test.com', 6);
@@ -353,13 +369,13 @@ ALTER TABLE `user_has_recompensas`
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `meme`
 --
 ALTER TABLE `meme`
-  MODIFY `idMeme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idMeme` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `migrations`
