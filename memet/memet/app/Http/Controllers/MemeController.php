@@ -68,7 +68,7 @@ class MemeController extends Controller
         //
         $request->validate(['tituloMeme'=>'required']);
         $request->validate(['rutaMeme'=>'required']);
-        $request->validate(['rutaMeme'=>'image|mimes:jpeg,png,jpg|max:4096']);
+        $request->validate(['rutaMeme'=>'image|max:4096']);
         $request->validate(['correoUser'=>'required']);
         //$request->validate(['tags'=>'required']);
         //

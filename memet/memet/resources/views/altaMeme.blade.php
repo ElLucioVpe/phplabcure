@@ -38,7 +38,7 @@
                         </div>
                         @error('rutaMeme')
                             <div class="alert alert-danger">
-                                Por favor seleccione una imagen de 4mb o menos (jpg, jpeg o png).
+                                Por favor seleccione una imagen de 4mb o menos.
                             </div>
                         @enderror
 
